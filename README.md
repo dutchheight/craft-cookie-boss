@@ -2,17 +2,17 @@
 
 # Craft Cookie consent plugin for Craft CMS 3.x
 Allow your visitors to set there cookie preference which you can use to enable features in your site.
-The plugin offers the following features:
 
-Create your own cookie types:
+Create your own cookie types, make then required and/or set there default state.
 
 ![Create own cookie types](resources/img/cookie-type-settings.png)
 
-
+The default modal contains the following features:
 - Default responsive modal
-    - Position preferenc
-    - Auto accept after x seconds
-    - block usage without consents
+- Position (top-left, top-right, bottom-left, bottom-right)
+- Auto accept and close after x seconds (optional)
+- Block site usage without consents
+- Display settings (yes/no)
 
 Modal with settings:
 
@@ -43,13 +43,7 @@ To install the plugin, follow these instructions.
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Craft Cookie consent.
 
-## Craft Cookie consent Overview
-
--Insert text here-
-
-## Configuring Craft Cookie consent
-
--Insert text here-
+4. Add `{{ craft.craftCookieConsent.askConsent() }}` on the page(s) which should display the modal.
 
 ## Using Craft Cookie consent
 ### Display the consent modal
