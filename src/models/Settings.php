@@ -39,7 +39,7 @@ class Settings extends Model
     /**
     * Is the plugin enabled
     *
-    * @var boolean
+    * @var number
     */
     public $cookieTime = 604800;
 
@@ -100,11 +100,18 @@ class Settings extends Model
     public $acceptButtonText = "Accept";
 
     /**
-    * The accept button text
+    * The cookie detailpage id
     *
     * @var number
     */
     public $cookiesPageId = null;
+
+    /**
+    * Accept after amount of time
+    *
+    * @var number
+    */
+    public $acceptAfterSeconds = 0;
 
     // Public Methods
     // =========================================================================

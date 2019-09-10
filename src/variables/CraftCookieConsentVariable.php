@@ -48,7 +48,7 @@ class CraftCookieConsentVariable
      * @param null $optional
      * @return string
      */
-    public function askConsent($displayIfCookiesSet = false, $templateSettings = null)
+    public function askConsent($templateSettings = null, $displayIfCookiesSet = false)
     {
         $view = Craft::$app->getView();
         if ($this->hasConsentCookie() && !$displayIfCookiesSet) {
@@ -76,7 +76,7 @@ class CraftCookieConsentVariable
      * @param string $handle
      * @return boolean
      */
-    public function isConsentWith($handle)
+    public function isConsentWith($handle, $concentIfNotSet = false)
     {
         if (!$this->hasConsentCookie()) {
             return false;
@@ -85,7 +85,7 @@ class CraftCookieConsentVariable
         $cookies = $this->getConsentCookies();
         $settings = json_decode($cookies->value, true);
         if (!key_exists($handle, $settings)) {
-            return false;
+            return $concentIfNotSet;
         }
         return $settings[$handle];
     }
@@ -94,9 +94,16 @@ class CraftCookieConsentVariable
      *
      * @return Array
      */
-    public function getConsents()
+    public function getConsents($defaultConcentIfNotSet = false)
     {
         if (!$this->hasConsentCookie()) {
+            if ($defaultConcentIfNotSet) {
+                $consents = [];
+                foreach (ConsentTypeService::getAllEnabled() as $consent) {
+                    $consents[$consent['handle']] = (bool)$consent['defaultValue'];
+                }
+                return $consents;
+            }
             return [];
         }
 

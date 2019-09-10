@@ -28,15 +28,15 @@ class ConsentController extends Controller
         $this->requirePostRequest();
 
         $originalData = ConsentTypeService::getAllEnabled();
-        $data = Craft::$app->getRequest()->getBodyParams();
+        $toggled = Craft::$app->getRequest()->getRequiredParam('toggled');
         $currentCookieConsents = [];
 
         foreach ($originalData as $consentsType) {
             $handle = $consentsType->handle;
             $allowed = false;
 
-            if (key_exists($handle, $data['toggled'])) {
-                $allowed = $data['toggled'][$handle];
+            if (key_exists($handle, $toggled)) {
+                $allowed = $toggled[$handle];
             } else {
                 $allowed = $consentsType->defaultValue;
             }

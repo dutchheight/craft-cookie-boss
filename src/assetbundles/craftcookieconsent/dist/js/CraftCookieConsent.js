@@ -39,12 +39,23 @@ Vue.component('consent-type', {
 
 var craftCookieConsent = new Vue({
     el: '#cookie-consent',
+    props: ['hideAfter'],
     delimiters: ['${', '}'],
     data: {
+        timer: '',
         show: true,
         forceAccept: false,
         settingsOpen: false,
         toggled: {}
+    },
+    created: function () {
+        var autoHide = window.craftCookieConsentHideAfter;
+        if (autoHide > 0) {
+            this.timer = setTimeout(this.accept, autoHide * 1000);
+        }
+    },
+    beforeDestroy () {
+        clearInterval(this.timer);
     },
     methods: {
         toggleForceAccept: function(force) {
@@ -54,24 +65,20 @@ var craftCookieConsent = new Vue({
             this.settingsOpen = !this.settingsOpen;
         },
         accept: function() {
+            clearInterval(this.timer);
             this.forceAccept = false;
             this.settingsOpen = false;
             this.show = false;
-            axios({
-                method: 'POST',
-                url: '/craft-cookie-consent/save-consent-settings', 
-                headers: {
-                    tokenName: window.csrfToken
-                }, 
-                data: { 
-                    toggled: this.toggled
-                } 
-            }).then(response => (console.log(response)))
+
+            var data = {
+                'toggled': this.toggled,
+                [window.csrfParam]: window.csrfToken
+            };
+            
+            axios({ method: 'POST', url: '/craft-cookie-consent/save-consent-settings', data: data});
         },
         toggledEvent: function(event) {
             this.toggled[event.handle] = event.defaultValue;
-            console.log(this.toggled);
-            console.log(event);
         }
     },
     watch: {

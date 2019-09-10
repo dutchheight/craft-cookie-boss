@@ -35,17 +35,6 @@
             on: settings['enabled']})
         }}
 
-        {{ forms.textField({
-            label: 'Consent invalid after in days' |t('craft-cookie-consent'),
-            instructions: 'The amount of time the consent is valid.' |t('craft-cookie-consent'),
-            id: 'cookieTime',
-            name: 'cookieTime',
-            type: 'number',
-            min: 1,
-            max: 365,
-            value: settings['cookieTime']
-        }) }}
-
         {{ forms.lightswitchField({
             label: 'Give choices immediately',
             instructions: 'Give choices immediately, turn off if u want "using is accepting". Keep in mind you can present the settings on a different page.' |t('craft-cookie-consent'),
@@ -71,6 +60,17 @@
             elements: [settings['cookiesPageId']],
             limit: 1})
         }}
+
+        {{ forms.textField({
+            label: 'Consent invalid after in days' |t('craft-cookie-consent'),
+            instructions: 'The amount of time the consent is valid.' |t('craft-cookie-consent'),
+            id: 'cookieTime',
+            name: 'cookieTime',
+            type: 'number',
+            min: 1,
+            max: 365,
+            value: settings['cookieTime']
+        }) }}
     </div>
 
     <div id="list-popup" class="hidden">
@@ -112,6 +112,16 @@
                 id: 'settingsButtonText',
                 name: 'settingsButtonText',
                 value: settings['settingsButtonText']
+        }) }}
+
+        {{ forms.textField({
+            label: 'Hide after' |t('craft-cookie-consent'),
+            instructions: 'Set the amount of seconds the the popup is visable. When the popup hides all default cookies are accepted. Set 0 to disable.' |t('craft-cookie-consent'),
+            id: 'acceptAfterSeconds',
+            name: 'acceptAfterSeconds',
+            type: 'number',
+            min: 0,
+            value: settings['acceptAfterSeconds']
         }) }}
     </div>
 

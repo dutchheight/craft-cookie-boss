@@ -13,7 +13,9 @@
     {% set lockedIcon = baseAssetsUrl ~ '/img/lock-solid.svg' %}
 
     <script>
+        window.csrfParam = "{{ craft.app.request.csrfParam }}"
         window.csrfToken = "{{ craft.app.request.csrfToken }}"
+        window.craftCookieConsentHideAfter = "{{ settings.acceptAfterSeconds }}"
     </script>
 
     <div id="cookie-consent" v-if="show">
@@ -57,7 +59,7 @@
                     <p class="item-wrapper" style="width: 100%;">
                         {{ settings.message }}
                         {% if settings.cookiesPageId %}
-                            For more info <a href="{{ settings.cookiesPageId.url }}">Cookie page</a>
+                            {{ 'For more info visit our'|t('craft-cookie-consent') }} <a href="{{ settings.cookiesPageId.url }}">{{ 'Cookie page'|t('craft-cookie-consent') }}</a>
                         {% endif %}
                     </p>
                     <div class="item-wrapper" style="width: 100%;">

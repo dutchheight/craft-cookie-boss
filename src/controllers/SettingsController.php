@@ -97,6 +97,7 @@ class SettingsController extends Controller
         $settings['acceptButtonText']   = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonText');
         $settings['settingsButtonText'] = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
         $settings['cookiesPageId']      = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');
+        $settings['acceptAfterSeconds'] = Craft::$app->getRequest()->getRequiredBodyParam('acceptAfterSeconds');
 
         $success = Craft::$app->getPlugins()->savePluginSettings($plugin, $settings);
         if (!$success) {
