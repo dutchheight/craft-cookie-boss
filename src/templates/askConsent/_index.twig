@@ -1,0 +1,71 @@
+{% if settings.enabled %}
+    {% if craft.app.config.general.devMode %}
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {% else %}
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {% endif %}
+
+    {% do view.registerAssetBundle("dutchheight\\craftcookieconsent\\assetbundles\\craftcookieconsent\\CraftCookieConsentAsset") %}
+    {% set baseAssetsUrl = view.getAssetManager().getPublishedUrl('@dutchheight/craftcookieconsent/assetbundles/craftcookieconsent/dist', true) %}
+    {% set checkedIcon = baseAssetsUrl ~ '/img/check-solid.svg' %}
+    {% set lockedIcon = baseAssetsUrl ~ '/img/lock-solid.svg' %}
+
+    <script>
+        window.csrfToken = "{{ craft.app.request.csrfToken }}"
+    </script>
+
+    <div id="cookie-consent" v-if="show">
+        {% if settings.forceAccept %}
+            <div id="cookie-consent-forcer">${ toggleForceAccept({{ settings.forceAccept }}) }</div>
+        {% endif %}
+        
+        {% if settings.presentTypes %}
+            <div id="cookie-consent-modal" class="{{ templateSettings.position }}">
+                <div id="container" v-if="!settingsOpen">
+                    <h3 class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.title }}</h3>
+                    <p class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.message }}</p>
+                    <div class="item-wrapper item-wrapper-padding">
+                        <a class="noselect" v-on:click="toggle">{{ settings.settingsButtonText }}</a>
+                    </div>
+                    <div class="item-wrapper item-wrapper-padding">
+                        <a class="accept noselect" v-on:click="accept()">{{ settings.acceptButtonText }}</a>
+                    </div>
+                </div>
+                
+                <div id="container" class="more-detail" v-if="settingsOpen">
+                    <h3 class="item-wrapper item-wrapper-padding" style="width: 100%;">{{ settings.title }}</h3>
+                    <p class="item-wrapper item-wrapper-padding" style="width: 100%;">{{ settings.messageSettings }}</p>
+                    <div class="consent-types">
+                        {% for type in consentTypes %}
+                            <consent-type :item="{{ type.toArray()|json_encode }}" checked-icon-path="{{ checkedIcon }}" locked-icon-path="{{ lockedIcon }}" @toggled="toggledEvent"></consent-type>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="item-wrapper item-wrapper-padding" style="width: 100%;">
+                        <a class="accept noselect" v-on:click="accept()">{{ settings.acceptButtonText }}</a>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+        
+            <div id="cookie-consent-modal" class="{{ templateSettings.position }}">
+                <div id="container">
+                    <h3 class="item-wrapper" style="width: 100%;">{{ settings.title }}</h3>
+                    <p class="item-wrapper" style="width: 100%;">
+                        {{ settings.message }}
+                        {% if settings.cookiesPageId %}
+                            For more info <a href="{{ settings.cookiesPageId.url }}">Cookie page</a>
+                        {% endif %}
+                    </p>
+                    <div class="item-wrapper" style="width: 100%;">
+                        <a class="accept" style="width: 100%;" v-on:click="accept()">{{ settings.acceptButtonText }}</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+{% endif %}

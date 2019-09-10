@@ -1,0 +1,39 @@
+{
+    "name": "dutchheight/craft-cookie-consent",
+    "description": "Allow your visitors to set there cookie preference.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "craft cookie consent"
+    ],
+    "support": {
+        "docs": "https://github.com/https://github.com/dutchheight/craft-cookie-consent/blob/master/README.md",
+        "issues": "https://github.com/https://github.com/dutchheight/craft-cookie-consent/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dutch Height",
+            "homepage": "https://www.dutchheight.com"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "dutchheight\\craftcookieconsent\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Craft Cookie Consent",
+        "handle": "craft-cookie-consent",
+        "hasCpSettings": true,
+        "changelogUrl": "https://raw.githubusercontent.com/https://github.com/dutchheight/craft-cookie-consent/master/CHANGELOG.md",
+        "class": "dutchheight\\craftcookieconsent\\CraftCookieConsent"
+    }
+}
