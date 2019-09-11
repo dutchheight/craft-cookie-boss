@@ -105,5 +105,6 @@ Some things to do, and ideas for potential features:
 
 * Release it
 * More modal options / templates
+* Support for settings form
 
 Brought to you by [Dutch Height](www.dutchheight.com)
