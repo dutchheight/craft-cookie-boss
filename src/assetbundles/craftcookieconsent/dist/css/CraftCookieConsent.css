@@ -11,36 +11,44 @@
  */
 
 .noselect {
-   -webkit-touch-callout: none; /* iOS Safari */
-     -webkit-user-select: none; /* Safari */
-      -khtml-user-select: none; /* Konqueror HTML */
-        -moz-user-select: none; /* Firefox */
-         -ms-user-select: none; /* Internet Explorer/Edge */
-             user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
                                    supported by Chrome and Opera */
 }
 
- #cookie-consent-forcer {
+#cookie-consent-forcer {
     display: block;
     position: fixed;
-    top: 0; left: 0;
-    height: 100vh; width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden;
-    
+
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 998;
- }
+}
 
- #cookie-consent-modal {
+#cookie-consent-modal {
     z-index: 999;
 
     display: block;
     position: fixed;
     width: 100vw;
     bottom: 0;
-    
+
     padding: 1rem 1.25rem 1rem 1.25rem;
-    
+
     color: #8795A1;
     font-weight: 300;
     line-height: 1.5;
@@ -51,189 +59,189 @@
     background-color: #F9FAFC;
     border: 1px solid #E2E8F0;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
- }
+}
 
- #cookie-consent-modal > #container {
+#cookie-consent-modal>#container {
     display: flex;
     flex-wrap: wrap;
- }
+}
 
- #cookie-consent-modal .item-wrapper {
+#cookie-consent-modal .item-wrapper {
     width: 100%;
- }
+}
 
- #cookie-consent-modal .item-wrapper-padding {
-   padding: .5rem .5rem 0 .5rem;
- }
+#cookie-consent-modal .item-wrapper-padding {
+    padding: .5rem .5rem 0 .5rem;
+}
 
- #cookie-consent-modal h3 {
+#cookie-consent-modal h3 {
     color: #606F7B;
     font-weight: bold;
     font-size: 1.25rem;
     margin-bottom: 0;
- }
+}
 
- #cookie-consent-modal h4 {
+#cookie-consent-modal h4 {
     color: #606F7B;
     font-weight: bold;
     font-size: 1rem;
     margin-bottom: .25rem;
- }
- 
- #cookie-consent-modal p {
+}
+
+#cookie-consent-modal p {
     font-size: 1rem;
     margin-bottom: 1rem;
     line-height: 1.5rem;
- }
+}
 
- #cookie-consent-modal p a {
-   display: inline;
-   padding: 0;
-   background-color: transparent;
-   color: #3182CE;
-   font-size: 1rem;
+#cookie-consent-modal p a {
+    display: inline;
+    padding: 0;
+    background-color: transparent;
+    color: #3182CE;
+    font-size: 1rem;
 
-   text-decoration: underline;
-   text-align: left;
-   cursor: pointer;
+    text-decoration: underline;
+    text-align: left;
+    cursor: pointer;
 }
 
 #cookie-consent-modal p a:hover {
-   background-color: transparent;
-   color: blue;
+    background-color: transparent;
+    color: blue;
 }
- 
- #cookie-consent-modal a {
+
+#cookie-consent-modal a {
     background-color: #e2e8f0;
     color: #718096;
     padding: .5rem;
     border-radius: .25rem;
     display: block;
     width: 100%;
-    
+
     text-decoration: none;
     text-align: center;
     cursor: pointer;
- }
+}
 
- #cookie-consent-modal a:hover {
+#cookie-consent-modal a:hover {
     background-color: #2d3748;
     color: white;
- }
+}
 
- #cookie-consent-modal a.accept {
+#cookie-consent-modal a.accept {
     background-color: #38C172;
     color: white;
     font-weight: 600;
- }
+}
 
- #cookie-consent-modal a.accept:hover {
+#cookie-consent-modal a.accept:hover {
     background-color: #2f855a;
- }
+}
 
- #cookie-consent-modal .consent-types {
+#cookie-consent-modal .consent-groups {
     width: 100%;
     margin: 1rem 0 1rem 0;
- }
+}
 
- #cookie-consent-modal .consent-type {
+#cookie-consent-modal .consent-group {
     margin: 0 .5rem 1rem .5rem;
     padding: .5rem;
     border-radius: .5rem;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     border: 1px solid #E2E8F0;
     cursor: pointer;
- }
+}
 
- #cookie-consent-modal .consent-type.isToggled {
+#cookie-consent-modal .consent-group.isToggled {
     border: 1px solid #38C172;
- }
+}
 
- #cookie-consent-modal .checked-icon {
+#cookie-consent-modal .checked-icon {
     width: 1.25rem;
     height: 1.25rem;
     background-color: #A2F5BF;
     border-radius: 9999px;
     padding: .25rem;
- }
+}
 
- #cookie-consent-modal .locked-icon {
+#cookie-consent-modal .locked-icon {
     width: 1.25rem;
     height: 1.25rem;
     background-color: #E2E8F0;
     border-radius: 9999px;
     padding: .25rem;
- }
+}
 
- @media (min-width: 768px) {
-   #cookie-consent-modal {
-      z-index: 999;
-  
-      display: block;
-      position: fixed;
-      width: 400px;
-      right: 2rem; 
-      bottom: 2rem;
-      
-      border-radius: .5rem;
+@media (min-width: 768px) {
+    #cookie-consent-modal {
+        z-index: 999;
 
-      padding: 1rem 1.25rem 1rem 1.25rem;
-   }
+        display: block;
+        position: fixed;
+        width: 400px;
+        right: 2rem;
+        bottom: 2rem;
 
-   #cookie-consent-modal.top-left {
-      left: 2rem; 
-      top: 2rem;
-      bottom: initial;
-   }
+        border-radius: .5rem;
 
-   #cookie-consent-modal.top-right {
-      right: 2rem; 
-      top: 2rem;
-      bottom: initial;
-   }
+        padding: 1rem 1.25rem 1rem 1.25rem;
+    }
 
-   #cookie-consent-modal.bottom-left {
-      left: 2rem; 
-      bottom: 2rem;
-   }
+    #cookie-consent-modal.top-left {
+        left: 2rem;
+        top: 2rem;
+        bottom: initial;
+    }
 
-   #cookie-consent-modal.bottom-right {
-      right: 2rem; 
-      bottom: 2rem;
-   }
+    #cookie-consent-modal.top-right {
+        right: 2rem;
+        top: 2rem;
+        bottom: initial;
+    }
 
-   #cookie-consent-modal > #container {
-      display: flex;
-      flex-wrap: wrap;
-   }
-  
-   #cookie-consent-modal .item-wrapper {
-      width: 50%;
-      padding: 0 .5rem 0 .5rem;
-   }
-  
-   #cookie-consent-modal h3 {
-      font-weight: bold;
-      font-size: 1.25rem;
-      margin-bottom: 0;
-      margin-top: 0;
-   }
-  
-   #cookie-consent-modal h4 {
-      font-weight: bold;
-      font-size: 1rem;
-      margin-bottom: .25rem;
-   }
-   
-   #cookie-consent-modal p {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-   }
-  
-   #cookie-consent-modal a {
-      padding: .5rem;
-      border-radius: .25rem;
-      display: block;
-      width: 100%;
-   }
- }
+    #cookie-consent-modal.bottom-left {
+        left: 2rem;
+        bottom: 2rem;
+    }
+
+    #cookie-consent-modal.bottom-right {
+        right: 2rem;
+        bottom: 2rem;
+    }
+
+    #cookie-consent-modal>#container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #cookie-consent-modal .item-wrapper {
+        width: 50%;
+        padding: 0 .5rem 0 .5rem;
+    }
+    
+    #cookie-consent-modal h3 {
+        font-weight: bold;
+        font-size: 1.25rem;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    #cookie-consent-modal h4 {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: .25rem;
+    }
+
+    #cookie-consent-modal p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    #cookie-consent-modal a {
+        padding: .5rem;
+        border-radius: .25rem;
+        display: block;
+        width: 100%;
+    }
+}

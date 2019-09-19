@@ -1,0 +1,20 @@
+<table id="cookie-descriptions">
+    <thead>
+        <tr>
+            <th>{{ 'Name'|t }}</th>
+            <th>{{ 'Description'|t }}</th>
+            <th>{{ 'Purpose'|t }}</th>
+            <th>{{ 'Key'|t }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cookieDescription in cookieDescriptions %}
+            <tr class="consent-{{ cookieDescription.hasConsent() ? 'true' : 'false' }}">
+                <td>{{ cookieDescription.name }}</td>
+                <td>{{ cookieDescription.desc }}</td>
+                <td>{{ cookieDescription.purpose }}</td>
+                <td>{{ cookieDescription.key }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

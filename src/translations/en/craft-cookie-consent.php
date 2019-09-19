@@ -22,10 +22,10 @@
  */
 return [
     'Turn on or off the plugin.' => 'Turn on or off the plugin.',
-    'Which consent type do you like to include is this site.' => 'Which consent type do you like to include is this site.',
+    'Which consent group do you like to include is this site.' => 'Which consent group do you like to include is this site.',
     'Handle to use in twig.' => 'Handle to use in twig.',
-    'The name of this consent type.' => 'The name of this consent type.',
-    'The description of this type. This description is visable for your visitors.' => 'The description of this type. This description is visable for your visitors.',
+    'The name of this consent group.' => 'The name of this consent group.',
+    'The description of this group. This description is visable for your visitors.' => 'The description of this group. This description is visable for your visitors.',
     'Switches the default state.' => 'Switches the default state.',
-    'Set to true if this consent type is required to opperate the site.' => 'Set to true if this consent type is required to opperate the site.',
+    'Set to true if this consent group is required to opperate the site.' => 'Set to true if this consent group is required to opperate the site.',
 ];

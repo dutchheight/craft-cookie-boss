@@ -97,18 +97,18 @@ class Install extends Migration
     {
         $tablesCreated = false;
 
-    // craftcookieconsent_consenttype table
-        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%craftcookieconsent_consenttype}}');
+        // craftcookieconsent_consentgroup table
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%craftcookieconsent_consentgroup}}');
         if ($tableSchema === null) {
             $tablesCreated = true;
             $this->createTable(
-                '{{%craftcookieconsent_consenttype}}',
+                '{{%craftcookieconsent_consentgroup}}',
                 [
                     'id' => $this->primaryKey(),
                     'dateCreated' => $this->dateTime()->notNull(),
                     'dateUpdated' => $this->dateTime()->notNull(),
                     'uid' => $this->uid(),
-                // Custom columns in the table
+                    // Custom columns in the table
                     'siteId' => $this->integer(),
                     'handle' => $this->string(255)->notNull()->defaultValue(''),
                     'name' => $this->string(255)->notNull()->defaultValue(''),
@@ -116,6 +116,23 @@ class Install extends Migration
                     'enabled' => $this->boolean()->notNull()->defaultValue(1),
                     'required' => $this->boolean()->notNull()->defaultValue(0),
                     'defaultValue' => $this->boolean()->notNull()->defaultValue(0),
+                ]
+            );
+
+            $this->createTable(
+                '{{%craftcookieconsent_cookiedescription}}',
+                [
+                    'id' => $this->primaryKey(),
+                    'dateCreated' => $this->dateTime()->notNull(),
+                    'dateUpdated' => $this->dateTime()->notNull(),
+                    'uid' => $this->uid(),
+                    // Custom columns in the table
+                    'consentGroupId' => $this->integer(),
+                    'name' => $this->string(255)->notNull()->defaultValue(''),
+                    'key' => $this->string(255)->notNull()->defaultValue(''),
+                    'desc' => $this->string(255)->notNull()->defaultValue(''),
+                    'purpose' => $this->string(255)->notNull()->defaultValue(''),
+                    'enabled' => $this->boolean()->notNull()->defaultValue(1)
                 ]
             );
         }
@@ -130,14 +147,14 @@ class Install extends Migration
      */
     protected function createIndexes()
     {
-    // craftcookieconsent_consenttype table
+    // craftcookieconsent_consentgroup table
         // $this->createIndex(
         //     $this->db->getIndexName(
-        //         '{{%craftcookieconsent_consenttype}}',
+        //         '{{%craftcookieconsent_consentgroup}}',
         //         'some_field',
         //         true
         //     ),
-        //     '{{%craftcookieconsent_consenttype}}',
+        //     '{{%craftcookieconsent_consentgroup}}',
         //     'some_field',
         //     true
         // );
@@ -157,15 +174,26 @@ class Install extends Migration
      */
     protected function addForeignKeys()
     {
-    // craftcookieconsent_consenttype table
+        // craftcookieconsent_consentgroup table
         $this->addForeignKey(
-            $this->db->getForeignKeyName('{{%craftcookieconsent_consenttype}}', 'siteId'),
-            '{{%craftcookieconsent_consenttype}}',
+            $this->db->getForeignKeyName('{{%craftcookieconsent_consentgroup}}', 'siteId'),
+            '{{%craftcookieconsent_consentgroup}}',
             'siteId',
             '{{%sites}}',
             'id',
             'CASCADE',
             'CASCADE'
+        );
+        
+        // craftcookieconsent_cookiedescription table
+        $this->addForeignKey(
+            $this->db->getForeignKeyName('{{%craftcookieconsent_cookiedescription}}', 'consentGroupId'),
+            '{{%craftcookieconsent_cookiedescription}}',
+            'consentGroupId',
+            '{{%craftcookieconsent_consentgroup}}',
+            'id',
+            'SET NULL',
+            'SET NULL'
         );
     }
 
@@ -176,12 +204,21 @@ class Install extends Migration
      */
     protected function insertDefaultData()
     {
-        $this->insert('{{%craftcookieconsent_consenttype}}', [
+        $this->insert('{{%craftcookieconsent_consentgroup}}', [
             'handle' => 'technical',
             'name' => 'Technical',
             'desc' => 'Needed to use the site',
             'required' => 1,
             'defaultValue' => 1,
+        ], true);
+
+        $this->insert('{{%craftcookieconsent_cookiedescription}}', [
+            'consentGroupId' => 1,
+            'name' => 'Cookie message',
+            'key' => 'craft-cookie-consent',
+            'desc' => 'This info isn\'t shared with third partys. And will be removed after7 days.',
+            'purpose' => 'We use this to save your cookie preferences and if you have seen the cookie modal.',
+            'enabled' => 1
         ], true);
     }
 
@@ -192,7 +229,9 @@ class Install extends Migration
      */
     protected function removeTables()
     {
-    // craftcookieconsent_consenttype table
-        $this->dropTableIfExists('{{%craftcookieconsent_consenttype}}');
+        // craftcookieconsent_cookiedescription table
+        $this->dropTableIfExists('{{%craftcookieconsent_cookiedescription}}');
+        // craftcookieconsent_consentgroup table
+        $this->dropTableIfExists('{{%craftcookieconsent_consentgroup}}');
     }
 }

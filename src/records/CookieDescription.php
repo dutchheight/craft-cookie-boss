@@ -10,13 +10,13 @@
 
 namespace dutchheight\craftcookieconsent\records;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
-
 use Craft;
 use craft\db\ActiveRecord;
 
+use dutchheight\craftcookieconsent\services\ConsentService;
+
 /**
- * ConsentType Record
+ * ConsentGroup Record
  *
  * ActiveRecord is the base class for classes representing relational data in terms of objects.
  *
@@ -31,17 +31,13 @@ use craft\db\ActiveRecord;
  * @package   CraftCookieConsent
  * @since     1.0.0
  */
-class ConsentType extends ActiveRecord
+class CookieDescription extends ActiveRecord
 {
     // Public Static Methods
     // =========================================================================
 
     public function init() {
         parent::init();
-
-        $this->enabled = 1;
-        $this->required = 0;
-        $this->defaultValue = 1;
     }
 
      /**
@@ -58,13 +54,23 @@ class ConsentType extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%craftcookieconsent_consenttype}}';
+        return '{{%craftcookieconsent_cookiedescription}}';
+    }
+
+    public function relations()
+    {
+        return array('consentGroup' => array(self::HAS_ONE, 'ConsentGroup', 'consentGroupId'));
     }
 
     public function rules()
     {
         return [
-            [['handle', 'name', 'desc'], 'required']
+            [['name', 'key', 'desc', 'purpose'], 'required']
         ];
+    }
+
+    public function hasConsent() {
+        $group = $this->hasOne(ConsentGroup::className(), ['id' => 'consentGroupId'])->one();
+        return ConsentService::isConsentWith($group->handle);
     }
 }

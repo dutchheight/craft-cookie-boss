@@ -4,13 +4,14 @@ namespace dutchheight\craftcookieconsent\controllers;
 
 use dutchheight\craftcookieconsent\CraftCookieConsent;
 use dutchheight\craftcookieconsent\models\Settings;
+use dutchheight\craftcookieconsent\services\ConsentGroupService;
+use dutchheight\craftcookieconsent\services\CookieDescriptionService;
 
 use Craft;
 use craft\web\Controller;
 use craft\helpers\UrlHelper;
 use craft\records\Element;
 use craft\elements\Entry;
-use dutchheight\craftcookieconsent\services\ConsentTypeService;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;
 
@@ -38,6 +39,10 @@ class SettingsController extends Controller
         // Reformat to days
         $settings['cookieTime'] = $settings['cookieTime'] / 86400;
         $settings['cookiesPageId'] = Entry::findOne(['id' => $settings['cookiesPageId']]);
+        
+        $variables['consentGroups'] = ConsentGroupService::getAll();
+        $variables['consentGroupsSelectOptions'] = ConsentGroupService::getAllAsSelectOptions();
+        $variables['cookies'] = CookieDescriptionService::getAll();
 
         $variables['settings'] = $settings;
         $variables['tabs'] = [
@@ -49,9 +54,13 @@ class SettingsController extends Controller
                 'label' => Craft::t('craft-cookie-consent', 'Popup'),
                 'url' => '#list-popup'
             ],
-            'consent-types' => [
-                'label' => Craft::t('craft-cookie-consent', 'Consent types'),
-                'url' => '#list-consent-types'
+            'consent-groups' => [
+                'label' => Craft::t('craft-cookie-consent', 'Consent groups'),
+                'url' => '#list-consent-groups'
+            ],
+            'cookies' => [
+                'label' => Craft::t('craft-cookie-consent', 'Cookies'),
+                'url' => '#list-cookies'
             ]
         ];
 
@@ -75,20 +84,24 @@ class SettingsController extends Controller
             throw new NotFoundHttpException(Craft::t('app', 'Plugin not found.'));
         }
 
-        $consentTypes = Craft::$app->getRequest()->getRequiredBodyParam('cookieTypes');
-        if (!$consentTypes) {
+        $cookies        = Craft::$app->getRequest()->getRequiredBodyParam('cookies');
+        $cookies        = empty($cookies) ? [] : $cookies;
+        $update = CookieDescriptionService::updateAll($cookies);
+        if (is_array($update)) {
             $this->error($plugin);
             return null;
         }
 
-        $update = ConsentTypeService::updateAll($consentTypes);
+        $consentGroups  = Craft::$app->getRequest()->getRequiredBodyParam('consentGroups');
+        $consentGroups  = empty($consentGroups) ? [] : $consentGroups;
+        $update = ConsentGroupService::updateAll($consentGroups);
         if (is_array($update)) {
             $this->error($plugin);
             return null;
         }
 
         $settings['enabled']            = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
-        $settings['presentTypes']       = (Craft::$app->getRequest()->getRequiredBodyParam('presentTypes') == '1');
+        $settings['presentGroups']       = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
         $settings['forceAccept']        = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
         
         $settings['cookieTime']         = Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') * 86400;

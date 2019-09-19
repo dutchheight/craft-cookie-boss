@@ -38,9 +38,9 @@
         {{ forms.lightswitchField({
             label: 'Give choices immediately',
             instructions: 'Give choices immediately, turn off if u want "using is accepting". Keep in mind you can present the settings on a different page.' |t('craft-cookie-consent'),
-            id: 'presentTypes',
-            name: 'presentTypes',
-            on: settings['presentTypes']})
+            id: 'presentGroups',
+            name: 'presentGroups',
+            on: settings['presentGroups']})
         }}
     
         {{ forms.lightswitchField({
@@ -125,15 +125,19 @@
         }) }}
     </div>
 
-    <div id="list-consent-types" class="hidden">
+    <div id="list-consent-groups" class="hidden">
         {{ forms.editableTableField({
-            id: 'consentTypes',
-            label: 'Consent types' |t('craft-cookie-consent'),
+            id: 'consentGroups',
+            label: 'Consent groups' |t('craft-cookie-consent'),
             required: true,
-            instructions: 'Which consent type do you like to include is this site.' |t('craft-cookie-consent'),
-            name: 'cookieTypes',
-            rows: settings.consentTypes,
+            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('craft-cookie-consent'),
+            name: 'consentGroups',
+            rows: consentGroups,
             cols: {
+                id: {
+                    type: 'number',
+                    class: 'hidden'
+                },
                 enabled: {
                     heading: 'Enabled' |t('craft-cookie-consent'),
                     type: 'lightswitch',
@@ -143,7 +147,7 @@
                     id: 'name',
                     heading: 'Name' |t('craft-cookie-consent'),
                     type: 'singleline',
-                    info: 'The name of this consent type.' |t('craft-cookie-consent'),
+                    info: 'The name of this consent group.' |t('craft-cookie-consent'),
                 },
                 handle: {
                     heading: 'Handle',
@@ -156,7 +160,7 @@
                 desc: {
                     heading: 'Description' |t('craft-cookie-consent'),
                     type: 'text',
-                    info: 'The description of this type. This description is visable for your visitors.' |t('craft-cookie-consent'),
+                    info: 'The description of this group. This description is visable for your visitors.' |t('craft-cookie-consent'),
                 },
                 defaultValue: {
                     heading: 'Default on' |t('craft-cookie-consent'),
@@ -166,7 +170,59 @@
                 required: {
                     heading: 'Required' |t('craft-cookie-consent'),
                     type: 'lightswitch',
-                    info: 'Set to true if this consent type is required to opperate the site.' |t('craft-cookie-consent'),
+                    info: 'Set to true if this consent group is required to opperate the site.' |t('craft-cookie-consent'),
+                }
+            },
+        }) }}
+    </div>
+
+    <div id="list-cookies" class="hidden">
+        {{ forms.editableTableField({
+            id: 'cookies',
+            label: 'Cookies' |t('craft-cookie-consent'),
+            required: true,
+            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('craft-cookie-consent'),
+            name: 'cookies',
+            rows: cookies,
+            cols: {
+                id: {
+                    type: 'number',
+                    class: 'hidden'
+                },
+                enabled: {
+                    heading: 'Enabled' |t('craft-cookie-consent'),
+                    type: 'lightswitch',
+                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('craft-cookie-consent'),
+                },
+                consentGroupId: {
+                    heading: 'Consent group' |t('craft-cookie-consent'),
+                    type: 'select',
+                    options: consentGroupsSelectOptions,
+                    info: 'Set the consent group.' |t('craft-cookie-consent'),
+                },
+                name: {
+                    id: 'name',
+                    heading: 'Name' |t('craft-cookie-consent'),
+                    type: 'singleline',
+                    info: 'The name of this consent group.' |t('craft-cookie-consent'),
+                },
+                key: {
+                    heading: 'key',
+                    type: 'singleline',
+                    class: 'code',
+                    autocorrect: false,
+                    autocapitalize: false,
+                    info: 'Key used for this cookie.' |t('craft-cookie-consent'),
+                },
+                purpose: {
+                    heading: 'Purpose' |t('craft-cookie-consent'),
+                    type: 'text',
+                    info: 'The description of this group. This description is visable for your visitors.' |t('craft-cookie-consent'),
+                },
+                desc: {
+                    heading: 'Description' |t('craft-cookie-consent'),
+                    type: 'text',
+                    info: 'The description of this group. This description is visable for your visitors.' |t('craft-cookie-consent'),
                 }
             },
         }) }}
@@ -175,7 +231,7 @@
 
 
 {% js %}
-    {% for item in settings.consentTypes %}
-        new Craft.HandleGenerator('textarea[name=cookieTypes\\[{{ loop.index0 }}\\]\\[name\\]]', 'textarea[name=cookieTypes\\[{{ loop.index0 }}\\]\\[handle\\]]');    
+    {% for item in settings.consentGroups %}
+        new Craft.HandleGenerator('textarea[name=cookieGroups\\[{{ loop.index0 }}\\]\\[name\\]]', 'textarea[name=cookieGroups\\[{{ loop.index0 }}\\]\\[handle\\]]');    
     {% endfor %}
 {% endjs %}

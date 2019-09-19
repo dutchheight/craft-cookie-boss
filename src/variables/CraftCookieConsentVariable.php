@@ -11,11 +11,13 @@
 namespace dutchheight\craftcookieconsent\variables;
 
 use dutchheight\craftcookieconsent\CraftCookieConsent;
-use dutchheight\craftcookieconsent\services\ConsentTypeService;
+use dutchheight\craftcookieconsent\services\ConsentGroupService;
+use dutchheight\craftcookieconsent\services\CookieDescriptionService;
 
 use Craft;
 use craft\web\View;
 use craft\elements\Entry;
+use dutchheight\craftcookieconsent\services\ConsentService;
 
 /**
  * Craft Cookie consent Variable
@@ -35,23 +37,14 @@ class CraftCookieConsentVariable
     // =========================================================================
 
     /**
-     * Whatever you want to output to a Twig template can go into a Variable method.
-     * You can have as many variable functions as you want.  From any Twig template,
-     * call it like this:
-     *
-     *     {{ craft.craftCookieConsent.exampleVariable }}
-     *
-     * Or, if your variable requires parameters from Twig:
-     *
-     *     {{ craft.craftCookieConsent.exampleVariable(twigValue) }}
-     *
      * @param null $optional
      * @return string
      */
     public function askConsent($templateSettings = null, $displayIfCookiesSet = false)
     {
         $view = Craft::$app->getView();
-        if ($this->hasConsentCookie() && !$displayIfCookiesSet) {
+        
+        if (ConsentService::hasConsentCookie() && !$displayIfCookiesSet) {
             return;
         }
 
@@ -66,7 +59,7 @@ class CraftCookieConsentVariable
         echo $view->renderTemplate('craft-cookie-consent/askConsent/_index', [
             'templateSettings'  => $templateSettings,
             'settings'          => $settings,
-            'consentTypes'      => ConsentTypeService::getAllEnabled()
+            'consentGroups'      => ConsentGroupService::getAllEnabled()
         ]);
         $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
     }
@@ -78,28 +71,19 @@ class CraftCookieConsentVariable
      */
     public function isConsentWith($handle, $concentIfNotSet = false)
     {
-        if (!$this->hasConsentCookie()) {
-            return false;
-        }
-
-        $cookies = $this->getConsentCookies();
-        $settings = json_decode($cookies->value, true);
-        if (!key_exists($handle, $settings)) {
-            return $concentIfNotSet;
-        }
-        return $settings[$handle];
+        return ConsentService::isConsentWith($handle, $concentIfNotSet);
     }
     
     /**
      *
-     * @return Array
+     * @return JSON
      */
     public function getConsents($defaultConcentIfNotSet = false)
     {
-        if (!$this->hasConsentCookie()) {
+        if (!ConsentService::hasConsentCookie()) {
             if ($defaultConcentIfNotSet) {
                 $consents = [];
-                foreach (ConsentTypeService::getAllEnabled() as $consent) {
+                foreach (ConsentGroupService::getAllEnabled() as $consent) {
                     $consents[$consent['handle']] = (bool)$consent['defaultValue'];
                 }
                 return $consents;
@@ -107,8 +91,22 @@ class CraftCookieConsentVariable
             return [];
         }
 
-        $cookies = $this->getConsentCookies();
+        $cookies = ConsentService::getConsentCookies();
         return json_decode($cookies->value, true);
+    }
+
+    /**
+     * @param null $optional
+     * @return string
+     */
+    public function getCookies()
+    {
+        $view = Craft::$app->getView();
+        $view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        echo $view->renderTemplate('craft-cookie-consent/cookieDescription/_index', [
+            'cookieDescriptions' => CookieDescriptionService::getAllEnabled()
+        ]);
+        $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
     }
 
     /** 
@@ -117,27 +115,20 @@ class CraftCookieConsentVariable
      */
     public function getConsentsRaw()
     {
-        return ConsentTypeService::getAllEnabled();
+        return ConsentGroupService::getAllEnabled();
+    }
+    
+    /** 
+     * @param null $optional
+     * @return string
+     */
+    public function getCookiesRaw($consentGroupHandle = null)
+    {
+        return CookieDescriptionService::getAll($consentGroupHandle);
     }
 
     // Private Methods
     // =========================================================================
-
-    /**
-     *
-     * @return Boolean
-     */
-    private function hasConsentCookie() {
-        return Craft::$app->getRequest()->getCookies()->has('craft-cookie-consent');
-    }
-
-    /**
-     *
-     * @return Array
-     */
-    private function getConsentCookies() {
-        return Craft::$app->getRequest()->getCookies()->get('craft-cookie-consent');
-    }
 
     /**
      *

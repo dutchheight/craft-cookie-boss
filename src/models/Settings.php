@@ -10,12 +10,12 @@
 
 namespace dutchheight\craftcookieconsent\models;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
-use dutchheight\craftcookieconsent\services\ConsentTypeService;
-
 use Craft;
 use craft\base\Model;
 
+use dutchheight\craftcookieconsent\CraftCookieConsent;
+use dutchheight\craftcookieconsent\services\ConsentGroupService;
+use dutchheight\craftcookieconsent\services\CookieDescriptionService;
 
 /**
  * CraftCookieConsent Settings Model
@@ -55,7 +55,7 @@ class Settings extends Model
     *
     * @var boolean
     */
-    public $presentTypes = false;
+    public $presentGroups = false;
 
     /**
     * If false cookies are allowed when using the website
@@ -143,11 +143,20 @@ class Settings extends Model
     }
 
     /**
-     * Returns all consentTypes.
+     * Returns all consentGroups.
      *
      * @return array
      */
-    public function consentTypes() {
-        return ConsentTypeService::getAll();
+    public function consentGroups() {
+        return ConsentGroupService::getAll();
+    }
+
+    /**
+     * Returns all cookie descriptions.
+     *
+     * @return array
+     */
+    public function cookieDescriptions() {
+        return CookieDescriptionService::getAll();
     }
 }

@@ -23,7 +23,7 @@
             <div id="cookie-consent-forcer">${ toggleForceAccept({{ settings.forceAccept }}) }</div>
         {% endif %}
         
-        {% if settings.presentTypes %}
+        {% if settings.presentGroups %}
             <div id="cookie-consent-modal" class="{{ templateSettings.position }}">
                 <div id="container" v-if="!settingsOpen">
                     <h3 class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.title }}</h3>
@@ -39,9 +39,9 @@
                 <div id="container" class="more-detail" v-if="settingsOpen">
                     <h3 class="item-wrapper item-wrapper-padding" style="width: 100%;">{{ settings.title }}</h3>
                     <p class="item-wrapper item-wrapper-padding" style="width: 100%;">{{ settings.messageSettings }}</p>
-                    <div class="consent-types">
-                        {% for type in consentTypes %}
-                            <consent-type :item="{{ type.toArray()|json_encode }}" checked-icon-path="{{ checkedIcon }}" locked-icon-path="{{ lockedIcon }}" @toggled="toggledEvent"></consent-type>
+                    <div class="consent-groups">
+                        {% for group in consentGroups %}
+                            <consent-group :item="{{ group.toArray()|json_encode }}" checked-icon-path="{{ checkedIcon }}" locked-icon-path="{{ lockedIcon }}" @toggled="toggledEvent"></consent-group>
                         {% endfor %}
                     </div>
                     

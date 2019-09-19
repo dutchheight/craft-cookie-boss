@@ -5,7 +5,7 @@ namespace dutchheight\craftcookieconsent\controllers;
 
 use dutchheight\craftcookieconsent\CraftCookieConsent;
 use dutchheight\craftcookieconsent\models\Settings;
-use dutchheight\craftcookieconsent\services\ConsentTypeService;
+use dutchheight\craftcookieconsent\services\ConsentGroupService;
 
 use Craft;
 use craft\web\Controller;
@@ -27,21 +27,21 @@ class ConsentController extends Controller
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
-        $originalData = ConsentTypeService::getAllEnabled();
-        $toggled = Craft::$app->getRequest()->getRequiredParam('toggled');
+        $originalData = ConsentGroupService::getAllEnabled();
+        $groups = Craft::$app->getRequest()->getRequiredParam('groups');
         $currentCookieConsents = [];
 
-        foreach ($originalData as $consentsType) {
-            $handle = $consentsType->handle;
+        foreach ($originalData as $consentsGroups) {
+            $handle = $consentsGroups->handle;
             $allowed = false;
 
-            if (key_exists($handle, $toggled)) {
-                $allowed = $toggled[$handle];
+            if (key_exists($handle, $groups)) {
+                $allowed = $groups[$handle];
             } else {
-                $allowed = $consentsType->defaultValue;
+                $allowed = $consentsGroups->defaultValue;
             }
 
-            if ($consentsType->required) {
+            if ($consentsGroups->required) {
                 $allowed = true;
             }
             $currentCookieConsents[$handle] = boolval($allowed);

@@ -2,10 +2,10 @@
 
 # Craft Cookie consent plugin for Craft CMS 3.x
 Allow your visitors to set there cookie preference which you can use to enable features in your site.
+Create your own cookie groups, make then required and/or set there default state.
+These cookie groups can contain cookies with information which you can display to describe the purpos of each cookie.
 
-Create your own cookie types, make then required and/or set there default state.
-
-![Create own cookie types](resources/img/cookie-type-settings.png)
+![Create own cookie groups](resources/img/cookie-type-settings.png)
 
 The default modal contains the following features:
 - Default responsive modal
@@ -62,7 +62,20 @@ Display the modal in the top right corner
 ```craft.craftCookieConsent.getConsents({'position': 'top-right'})```
 
 Display the modal *always*
-```craft.craftCookieConsent.getConsents({}, true)```
+```
+{{ craft.craftCookieConsent.getConsents({}, true) }}
+```
+
+### Display cookie descriptions
+Display's a table with all enabled cookies. The table has the `#cookie-descriptions` id.
+Eache cookie is provided with the class `consent-true` or `consent-false` depending on the consentgroup's consent.
+`craft.craftCookieConsent.getCookies()` is used to display a table with all `enabled` cookies.
+
+#### Examples
+Display a table with all enabled cookies
+```
+{{ craft.craftCookieConsent.getCookies() }}
+```
 
 ### Get all visitor consents
 `craft.craftCookieConsent.getConsents(defaultConcentIfNotSet)` is used to get an array with the visitors consents.
@@ -94,17 +107,51 @@ Get all consents of the current visitor
 {% endif %}
 ```
 
+### Get all cookie descriptions
+`craft.craftCookieConsent.getCookiesRaw()` is used to get all cookie descriptions.
+`craft.craftCookieConsent.getCookiesRaw(consentGroupHandle)` is used to get all cookie descriptions for a consent group.
+
+| Attribute | Type | Required | Description |
+|:----------|:-----|:---------|:------------|
+|consentGroupHandle|string|true|Use a handle from the settings|
+
+#### Examples
+Get all cookie descriptions
+```
+craft.craftCookieConsent.getCookiesRaw()
+```
+
+
 ### Custom modal
 `craft.craftCookieConsent.getConsentsRaw` will return all raw data which you can use to create a custom modal.
 
+## Adding settings to your cookie page
 
+`/craft-cookie-consent/save-consent-settings` accepts `POST` requests with new consent settings.
+Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to get the key and `craft.app.request.csrfToken` to get the actual token.
+
+| Attribute | Type | Required | Description |
+|:----------|:-----|:---------|:------------|
+|toggled|object|true|Use a handle from the settings|
+|`csrfParam`|string|true|Craft csrf token. Use the `csrfParam` as key|
+
+#### Example request data
+```
+    "groups": {
+        "technical": true,
+        "marketing": false
+    },
+    "CRAFT_CSRF_TOKEN": "ABC...XYZ"
+```
 
 ## Craft Cookie consent Roadmap
 
 Some things to do, and ideas for potential features:
 
-* Release it
-* More modal options / templates
+* More modal options
+* More templates
 * Support for settings form
+* Javascript events
+* Release it
 
 Brought to you by [Dutch Height](www.dutchheight.com)
