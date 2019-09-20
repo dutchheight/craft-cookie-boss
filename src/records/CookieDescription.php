@@ -1,6 +1,6 @@
 <?php
 /**
- * Craft Cookie consent plugin for Craft CMS 3.x
+ * Craft Cookie boss plugin for Craft CMS 3.x
  *
  * Allow your visitors to set there cookie preference.
  *
@@ -8,12 +8,12 @@
  * @copyright Copyright (c) 2019 Dutch Height
  */
 
-namespace dutchheight\craftcookieconsent\records;
+namespace dutchheight\cookieboss\records;
 
 use Craft;
 use craft\db\ActiveRecord;
 
-use dutchheight\craftcookieconsent\services\ConsentService;
+use dutchheight\cookieboss\services\ConsentService;
 
 /**
  * ConsentGroup Record
@@ -28,7 +28,7 @@ use dutchheight\craftcookieconsent\services\ConsentService;
  * http://www.yiiframework.com/doc-2.0/guide-db-active-record.html
  *
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 class CookieDescription extends ActiveRecord
@@ -54,7 +54,7 @@ class CookieDescription extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%craftcookieconsent_cookiedescription}}';
+        return '{{%cookieboss_cookiedescription}}';
     }
 
     public function getConsentGroup() {
@@ -69,6 +69,9 @@ class CookieDescription extends ActiveRecord
     }
 
     public function hasConsent() {
+        if (is_null($this->consentGroupId)) {
+            return false;
+        }
         $group = $this->hasOne(ConsentGroup::className(), ['id' => 'consentGroupId'])->one();
         return ConsentService::isConsentWith($group->handle);
     }

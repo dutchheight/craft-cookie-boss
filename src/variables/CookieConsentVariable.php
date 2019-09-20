@@ -1,6 +1,6 @@
 <?php
 /**
- * Craft Cookie consent plugin for Craft CMS 3.x
+ * Craft Cookie boss plugin for Craft CMS 3.x
  *
  * Allow your visitors to set there cookie preference.
  *
@@ -8,30 +8,30 @@
  * @copyright Copyright (c) 2019 Dutch Height
  */
 
-namespace dutchheight\craftcookieconsent\variables;
+namespace dutchheight\cookieboss\variables;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
-use dutchheight\craftcookieconsent\services\ConsentGroupService;
-use dutchheight\craftcookieconsent\services\CookieDescriptionService;
+use dutchheight\cookieboss\CookieBoss;
+use dutchheight\cookieboss\services\ConsentGroupService;
+use dutchheight\cookieboss\services\CookieDescriptionService;
 
 use Craft;
 use craft\web\View;
 use craft\elements\Entry;
-use dutchheight\craftcookieconsent\services\ConsentService;
+use dutchheight\cookieboss\services\ConsentService;
 
 /**
- * Craft Cookie consent Variable
+ * Cookie consent Variable
  *
  * Craft allows plugins to provide their own template variables, accessible from
- * the {{ craft }} global variable (e.g. {{ craft.craftCookieConsent }}).
+ * the {{ craft }} global variable (e.g. {{ craft.CookieBoss }}).
  *
  * https://craftcms.com/docs/plugins/variables
  *
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
-class CraftCookieConsentVariable
+class CookieBossVariable
 {
     // Public Methods
     // =========================================================================
@@ -43,7 +43,7 @@ class CraftCookieConsentVariable
     public function askConsent($templateSettings = null, $displayIfCookiesSet = false)
     {
         $view = Craft::$app->getView();
-        
+
         if (ConsentService::hasConsentCookie() && !$displayIfCookiesSet) {
             return;
         }
@@ -52,18 +52,18 @@ class CraftCookieConsentVariable
             $templateSettings = $this->getDefaultTemplateSettings();
         }
 
-        $settings = CraftCookieConsent::$settings;
+        $settings = CookieBoss::$settings;
         $settings['cookiesPageId'] = Entry::findOne(['id' => $settings['cookiesPageId']]);
 
         $view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        echo $view->renderTemplate('craft-cookie-consent/askConsent/_index', [
+        echo $view->renderTemplate('cookie-boss/askConsent/_index', [
             'templateSettings'  => $templateSettings,
             'settings'          => $settings,
             'consentGroups'      => ConsentGroupService::getAllEnabled()
         ]);
         $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
     }
-    
+
     /**
      *
      * @param string $handle
@@ -73,7 +73,7 @@ class CraftCookieConsentVariable
     {
         return ConsentService::isConsentWith($handle, $concentIfNotSet);
     }
-    
+
     /**
      *
      * @return JSON
@@ -103,13 +103,13 @@ class CraftCookieConsentVariable
     {
         $view = Craft::$app->getView();
         $view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        echo $view->renderTemplate('craft-cookie-consent/cookieDescription/_index', [
+        echo $view->renderTemplate('cookie-boss/cookieDescription/_index', [
             'cookieDescriptions' => CookieDescriptionService::getAllEnabled()
         ]);
         $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
     }
 
-    /** 
+    /**
      * @param null $optional
      * @return string
      */
@@ -117,8 +117,8 @@ class CraftCookieConsentVariable
     {
         return ConsentGroupService::getAllEnabled();
     }
-    
-    /** 
+
+    /**
      * @param null $optional
      * @return string
      */

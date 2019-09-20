@@ -1,6 +1,6 @@
 <?php
 /**
- * Craft Cookie consent plugin for Craft CMS 3.x
+ * Craft Cookie boss plugin for Craft CMS 3.x
  *
  * Allow your visitors to set there cookie preference.
  *
@@ -8,17 +8,17 @@
  * @copyright Copyright (c) 2019 Dutch Height
  */
 
-namespace dutchheight\craftcookieconsent\models;
+namespace dutchheight\cookieboss\models;
 
 use Craft;
 use craft\base\Model;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
-use dutchheight\craftcookieconsent\services\ConsentGroupService;
-use dutchheight\craftcookieconsent\services\CookieDescriptionService;
+use dutchheight\cookieboss\CookieBoss;
+use dutchheight\cookieboss\services\ConsentGroupService;
+use dutchheight\cookieboss\services\CookieDescriptionService;
 
 /**
- * CraftCookieConsent Settings Model
+ * CookieBoss Settings Model
  *
  * This is a model used to define the plugin's settings.
  *
@@ -28,7 +28,7 @@ use dutchheight\craftcookieconsent\services\CookieDescriptionService;
  * https://craftcms.com/docs/plugins/models
  *
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 class Settings extends Model

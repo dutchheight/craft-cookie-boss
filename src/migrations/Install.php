@@ -1,6 +1,6 @@
 <?php
 /**
- * Craft Cookie consent plugin for Craft CMS 3.x
+ * Craft Cookie boss plugin for Craft CMS 3.x
  *
  * Allow your visitors to set there cookie preference.
  *
@@ -8,16 +8,16 @@
  * @copyright Copyright (c) 2019 Dutch Height
  */
 
-namespace dutchheight\craftcookieconsent\migrations;
+namespace dutchheight\cookieboss\migrations;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
+use dutchheight\cookieboss\CookieBoss;
 
 use Craft;
 use craft\config\DbConfig;
 use craft\db\Migration;
 
 /**
- * Craft Cookie consent Install Migration
+ * Craft Cookie boss Install Migration
  *
  * If your plugin needs to create any custom database tables when it gets installed,
  * create a migrations/ folder within your plugin folder, and save an Install.php file
@@ -27,7 +27,7 @@ use craft\db\Migration;
  * safeUp() and safeDown() methods.
  *
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 class Install extends Migration
@@ -97,12 +97,12 @@ class Install extends Migration
     {
         $tablesCreated = false;
 
-        // craftcookieconsent_consentgroup table
-        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%craftcookieconsent_consentgroup}}');
+        // cookieboss_consentgroup table
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%cookieboss_consentgroup}}');
         if ($tableSchema === null) {
             $tablesCreated = true;
             $this->createTable(
-                '{{%craftcookieconsent_consentgroup}}',
+                '{{%cookieboss_consentgroup}}',
                 [
                     'id' => $this->primaryKey(),
                     'dateCreated' => $this->dateTime()->notNull(),
@@ -120,7 +120,7 @@ class Install extends Migration
             );
 
             $this->createTable(
-                '{{%craftcookieconsent_cookiedescription}}',
+                '{{%cookieboss_cookiedescription}}',
                 [
                     'id' => $this->primaryKey(),
                     'dateCreated' => $this->dateTime()->notNull(),
@@ -147,14 +147,14 @@ class Install extends Migration
      */
     protected function createIndexes()
     {
-    // craftcookieconsent_consentgroup table
+    // cookieboss_consentgroup table
         // $this->createIndex(
         //     $this->db->getIndexName(
-        //         '{{%craftcookieconsent_consentgroup}}',
+        //         '{{%cookieboss_consentgroup}}',
         //         'some_field',
         //         true
         //     ),
-        //     '{{%craftcookieconsent_consentgroup}}',
+        //     '{{%cookieboss_consentgroup}}',
         //     'some_field',
         //     true
         // );
@@ -174,23 +174,23 @@ class Install extends Migration
      */
     protected function addForeignKeys()
     {
-        // craftcookieconsent_consentgroup table
+        // cookieboss_consentgroup table
         $this->addForeignKey(
-            $this->db->getForeignKeyName('{{%craftcookieconsent_consentgroup}}', 'siteId'),
-            '{{%craftcookieconsent_consentgroup}}',
+            $this->db->getForeignKeyName('{{%cookieboss_consentgroup}}', 'siteId'),
+            '{{%cookieboss_consentgroup}}',
             'siteId',
             '{{%sites}}',
             'id',
             'CASCADE',
             'CASCADE'
         );
-        
-        // craftcookieconsent_cookiedescription table
+
+        // cookieboss_cookiedescription table
         $this->addForeignKey(
-            $this->db->getForeignKeyName('{{%craftcookieconsent_cookiedescription}}', 'consentGroupId'),
-            '{{%craftcookieconsent_cookiedescription}}',
+            $this->db->getForeignKeyName('{{%cookieboss_cookiedescription}}', 'consentGroupId'),
+            '{{%cookieboss_cookiedescription}}',
             'consentGroupId',
-            '{{%craftcookieconsent_consentgroup}}',
+            '{{%cookieboss_consentgroup}}',
             'id',
             'SET NULL',
             'SET NULL'
@@ -204,7 +204,7 @@ class Install extends Migration
      */
     protected function insertDefaultData()
     {
-        $this->insert('{{%craftcookieconsent_consentgroup}}', [
+        $this->insert('{{%cookieboss_consentgroup}}', [
             'handle' => 'technical',
             'name' => 'Technical',
             'desc' => 'Needed to use the site',
@@ -212,10 +212,10 @@ class Install extends Migration
             'defaultValue' => 1,
         ], true);
 
-        $this->insert('{{%craftcookieconsent_cookiedescription}}', [
+        $this->insert('{{%cookieboss_cookiedescription}}', [
             'consentGroupId' => 1,
             'name' => 'Cookie message',
-            'key' => 'craft-cookie-consent',
+            'key' => 'craft-cookie-boss',
             'desc' => 'This info isn\'t shared with third partys. And will be removed after7 days.',
             'purpose' => 'We use this to save your cookie preferences and if you have seen the cookie modal.',
             'enabled' => 1
@@ -229,9 +229,9 @@ class Install extends Migration
      */
     protected function removeTables()
     {
-        // craftcookieconsent_cookiedescription table
-        $this->dropTableIfExists('{{%craftcookieconsent_cookiedescription}}');
-        // craftcookieconsent_consentgroup table
-        $this->dropTableIfExists('{{%craftcookieconsent_consentgroup}}');
+        // cookieboss_cookiedescription table
+        $this->dropTableIfExists('{{%cookieboss_cookiedescription}}');
+        // cookieboss_consentgroup table
+        $this->dropTableIfExists('{{%cookieboss_consentgroup}}');
     }
 }

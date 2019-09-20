@@ -1,13 +1,13 @@
 <?php
 
-namespace dutchheight\craftcookieconsent\services;
+namespace dutchheight\cookieboss\services;
 
 use Craft;
 use craft\base\Component;
-use dutchheight\craftcookieconsent\records\ConsentGroup;
+use dutchheight\cookieboss\records\ConsentGroup;
 
 class ConsentGroupService extends Component {
-    
+
     public static function getAll() {
         return ConsentGroup::find()->orderBy('id')->all();
     }
@@ -30,7 +30,7 @@ class ConsentGroupService extends Component {
 
         return $returner;
     }
-    
+
     public static function getAllEnabled() {
         return ConsentGroup::find()->where(['enabled' => 1])->orderBy('id')->all();
     }
@@ -46,7 +46,7 @@ class ConsentGroupService extends Component {
     }
 
     public static function updateAll(Array $groups) {
-        
+
         // All id's that are left over should be deleted
         $currentIds = ConsentGroup::find()->select(['id'])->asArray()->all();
         $currentIds = array_map('self::selectId', $currentIds);
@@ -61,7 +61,7 @@ class ConsentGroupService extends Component {
             } else {
                 $cg = new ConsentGroup();
             }
-            
+
             $cg->enabled = (!empty($group["enabled"]) ? $group["enabled"] : 0);
             $cg->defaultValue = (!empty($group["defaultValue"]) ? $group["defaultValue"] : 0);
             $cg->required = (!empty($group["required"]) ? $group["required"] : 0);
@@ -80,7 +80,7 @@ class ConsentGroupService extends Component {
             $deleteIds = implode(', ', $currentIds);
             ConsentGroup::deleteAll('id IN (' . $deleteIds . ')');
         }
-        
+
         return true;
     }
 }

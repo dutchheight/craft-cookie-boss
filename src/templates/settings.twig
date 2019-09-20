@@ -1,14 +1,14 @@
 {# @var craft \craft\web\twig\variables\CraftVariable #}
 {#
 /**
- * Craft Cookie consent plugin for Craft CMS 3.x
+ * Craft Cookie boss plugin for Craft CMS 3.x
  *
- * Craft Cookie consent Settings.twig
+ * Craft Cookie boss Settings.twig
  *
  * @author    Dutch Height
  * @copyright Copyright (c) 2019 Dutch Height
  * @link      www.dutchheight.com
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 #}
@@ -18,18 +18,18 @@
 
 {% import "_includes/forms" as forms %}
 
-{% set title = 'Craft Cookie Consent Settings'|t('craft-cookie-consent') %}
+{% set title = 'Cookie Consent Settings'|t('cookie-boss') %}
 
 
 {% block content %}
-    <input type="hidden" name="action" value="craft-cookie-consent/settings/save-general">
+    <input type="hidden" name="action" value="cookie-boss/settings/save-general">
     {{ csrfInput() }}
 
     <div id="list-general">
 
         {{ forms.lightswitchField({
             label: 'Enabled',
-            instructions: 'Enable the plugin.' |t('craft-cookie-consent'),
+            instructions: 'Enable the plugin.' |t('cookie-boss'),
             id: 'enabled',
             name: 'enabled',
             on: settings['enabled']})
@@ -37,15 +37,15 @@
 
         {{ forms.lightswitchField({
             label: 'Give choices immediately',
-            instructions: 'Give choices immediately, turn off if u want "using is accepting". Keep in mind you can present the settings on a different page.' |t('craft-cookie-consent'),
+            instructions: 'Give choices immediately, turn off if u want "using is accepting". Keep in mind you can present the settings on a different page.' |t('cookie-boss'),
             id: 'presentGroups',
             name: 'presentGroups',
             on: settings['presentGroups']})
         }}
-    
+
         {{ forms.lightswitchField({
             label: 'Force accept',
-            instructions: 'Prevent using the page until a consent is given.' |t('craft-cookie-consent'),
+            instructions: 'Prevent using the page until a consent is given.' |t('cookie-boss'),
             id: 'forceAccept',
             name: 'forceAccept',
             on: settings['forceAccept']})
@@ -53,7 +53,7 @@
 
         {{ forms.elementSelectField({
             label: 'Cookie page',
-            instructions: 'Set cookie page.' |t('craft-cookie-consent'),
+            instructions: 'Set cookie page.' |t('cookie-boss'),
             id: 'contactPage',
             name: 'contactPage',
             elementType: '\\craft\\elements\\Entry',
@@ -62,8 +62,8 @@
         }}
 
         {{ forms.textField({
-            label: 'Consent invalid after in days' |t('craft-cookie-consent'),
-            instructions: 'The amount of time the consent is valid.' |t('craft-cookie-consent'),
+            label: 'Consent invalid after in days' |t('cookie-boss'),
+            instructions: 'The amount of time the consent is valid.' |t('cookie-boss'),
             id: 'cookieTime',
             name: 'cookieTime',
             type: 'number',
@@ -75,48 +75,48 @@
 
     <div id="list-popup" class="hidden">
         {{ forms.textField({
-            label: 'Title' |t('craft-cookie-consent'),
-            instructions: 'The title of the consent popup.' |t('craft-cookie-consent'),
+            label: 'Title' |t('cookie-boss'),
+            instructions: 'The title of the consent popup.' |t('cookie-boss'),
             id: 'title',
             name: 'title',
             value: settings['title']
         }) }}
-        
+
         {{ forms.textareaField({
-            label: 'Message' |t('craft-cookie-consent'),
-            instructions: 'The message of the consent popup.' |t('craft-cookie-consent'),
+            label: 'Message' |t('cookie-boss'),
+            instructions: 'The message of the consent popup.' |t('cookie-boss'),
             id: 'message',
             name: 'message',
             value: settings['message']
         }) }}
-        
+
         {{ forms.textareaField({
-                label: 'Settings message' |t('craft-cookie-consent'),
-                instructions: 'The settings message of the consent popup.' |t('craft-cookie-consent'),
+                label: 'Settings message' |t('cookie-boss'),
+                instructions: 'The settings message of the consent popup.' |t('cookie-boss'),
                 id: 'messageSettings',
                 name: 'messageSettings',
                 value: settings['messageSettings']
         }) }}
-        
+
         {{ forms.textField({
-                label: 'Accept Button' |t('craft-cookie-consent'),
-                instructions: 'The text of the accept button.' |t('craft-cookie-consent'),
+                label: 'Accept Button' |t('cookie-boss'),
+                instructions: 'The text of the accept button.' |t('cookie-boss'),
                 id: 'acceptButtonText',
                 name: 'acceptButtonText',
                 value: settings['acceptButtonText']
         }) }}
-        
+
         {{ forms.textField({
-                label: 'Settings Button' |t('craft-cookie-consent'),
-                instructions: 'The text of the settings button.' |t('craft-cookie-consent'),
+                label: 'Settings Button' |t('cookie-boss'),
+                instructions: 'The text of the settings button.' |t('cookie-boss'),
                 id: 'settingsButtonText',
                 name: 'settingsButtonText',
                 value: settings['settingsButtonText']
         }) }}
 
         {{ forms.textField({
-            label: 'Hide after' |t('craft-cookie-consent'),
-            instructions: 'Set the amount of seconds the the popup is visable. When the popup hides all default cookies are accepted. Set 0 to disable.' |t('craft-cookie-consent'),
+            label: 'Hide after' |t('cookie-boss'),
+            instructions: 'Set the amount of seconds the the popup is visable. When the popup hides all default cookies are accepted. Set 0 to disable.' |t('cookie-boss'),
             id: 'acceptAfterSeconds',
             name: 'acceptAfterSeconds',
             type: 'number',
@@ -128,9 +128,9 @@
     <div id="list-consent-groups" class="hidden">
         {{ forms.editableTableField({
             id: 'consentGroups',
-            label: 'Consent groups' |t('craft-cookie-consent'),
+            label: 'Consent groups' |t('cookie-boss'),
             required: true,
-            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('craft-cookie-consent'),
+            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('cookie-boss'),
             name: 'consentGroups',
             rows: consentGroups,
             cols: {
@@ -139,15 +139,15 @@
                     class: 'hidden'
                 },
                 enabled: {
-                    heading: 'Enabled' |t('craft-cookie-consent'),
+                    heading: 'Enabled' |t('cookie-boss'),
                     type: 'lightswitch',
-                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('craft-cookie-consent'),
+                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('cookie-boss'),
                 },
                 name: {
                     id: 'name',
-                    heading: 'Name' |t('craft-cookie-consent'),
+                    heading: 'Name' |t('cookie-boss'),
                     type: 'singleline',
-                    info: 'The name of this consent group.' |t('craft-cookie-consent'),
+                    info: 'The name of this consent group.' |t('cookie-boss'),
                 },
                 handle: {
                     heading: 'Handle',
@@ -155,22 +155,22 @@
                     class: 'code',
                     autocorrect: false,
                     autocapitalize: false,
-                    info: 'Handle to use in twig.' |t('craft-cookie-consent'),
+                    info: 'Handle to use in twig.' |t('cookie-boss'),
                 },
                 desc: {
-                    heading: 'Description' |t('craft-cookie-consent'),
+                    heading: 'Description' |t('cookie-boss'),
                     type: 'text',
-                    info: 'The description of this group. This description is visable for your visitors.' |t('craft-cookie-consent'),
+                    info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
                 },
                 defaultValue: {
-                    heading: 'Default on' |t('craft-cookie-consent'),
+                    heading: 'Default on' |t('cookie-boss'),
                     type: 'lightswitch',
-                    info: 'Switches the default state.' |t('craft-cookie-consent'),
+                    info: 'Switches the default state.' |t('cookie-boss'),
                 },
                 required: {
-                    heading: 'Required' |t('craft-cookie-consent'),
+                    heading: 'Required' |t('cookie-boss'),
                     type: 'lightswitch',
-                    info: 'Set to true if this consent group is required to opperate the site.' |t('craft-cookie-consent'),
+                    info: 'Set to true if this consent group is required to opperate the site.' |t('cookie-boss'),
                 }
             },
         }) }}
@@ -179,9 +179,9 @@
     <div id="list-cookies" class="hidden">
         {{ forms.editableTableField({
             id: 'cookies',
-            label: 'Cookies' |t('craft-cookie-consent'),
+            label: 'Cookies' |t('cookie-boss'),
             required: true,
-            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('craft-cookie-consent'),
+            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('cookie-boss'),
             name: 'cookies',
             rows: cookies,
             cols: {
@@ -190,21 +190,21 @@
                     class: 'hidden'
                 },
                 enabled: {
-                    heading: 'Enabled' |t('craft-cookie-consent'),
+                    heading: 'Enabled' |t('cookie-boss'),
                     type: 'lightswitch',
-                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('craft-cookie-consent'),
+                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('cookie-boss'),
                 },
                 consentGroupId: {
-                    heading: 'Consent group' |t('craft-cookie-consent'),
+                    heading: 'Consent group' |t('cookie-boss'),
                     type: 'select',
                     options: consentGroupsSelectOptions,
-                    info: 'Set the consent group.' |t('craft-cookie-consent'),
+                    info: 'Set the consent group.' |t('cookie-boss'),
                 },
                 name: {
                     id: 'name',
-                    heading: 'Name' |t('craft-cookie-consent'),
+                    heading: 'Name' |t('cookie-boss'),
                     type: 'singleline',
-                    info: 'The name of this consent group.' |t('craft-cookie-consent'),
+                    info: 'The name of this consent group.' |t('cookie-boss'),
                 },
                 key: {
                     heading: 'key',
@@ -212,17 +212,17 @@
                     class: 'code',
                     autocorrect: false,
                     autocapitalize: false,
-                    info: 'Key used for this cookie.' |t('craft-cookie-consent'),
+                    info: 'Key used for this cookie.' |t('cookie-boss'),
                 },
                 purpose: {
-                    heading: 'Purpose' |t('craft-cookie-consent'),
+                    heading: 'Purpose' |t('cookie-boss'),
                     type: 'text',
-                    info: 'The description of this group. This description is visable for your visitors.' |t('craft-cookie-consent'),
+                    info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
                 },
                 desc: {
-                    heading: 'Description' |t('craft-cookie-consent'),
+                    heading: 'Description' |t('cookie-boss'),
                     type: 'text',
-                    info: 'The description of this group. This description is visable for your visitors.' |t('craft-cookie-consent'),
+                    info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
                 }
             },
         }) }}
@@ -231,7 +231,14 @@
 
 
 {% js %}
-    {% for item in settings.consentGroups %}
-        new Craft.HandleGenerator('textarea[name=cookieGroups\\[{{ loop.index0 }}\\]\\[name\\]]', 'textarea[name=cookieGroups\\[{{ loop.index0 }}\\]\\[handle\\]]');    
+    {% for item in consentGroups %}
+        new Craft.HandleGenerator('textarea[name=consentGroups\\[{{ loop.index0 }}\\]\\[name\\]]', 'textarea[name=consentGroups\\[{{ loop.index0 }}\\]\\[handle\\]]');
     {% endfor %}
+
+    $('.btn.add.icon').click(function($event) {
+        setTimeout(function() {
+            var consentGroupsNewRow = $('#consentGroups >tbody >tr').length - 1;
+            new Craft.HandleGenerator('textarea[name=consentGroups\\[' + consentGroupsNewRow + '\\]\\[name\\]]', 'textarea[name=consentGroups\\[' + consentGroupsNewRow + '\\]\\[handle\\]]');
+        }, 500);
+    });
 {% endjs %}

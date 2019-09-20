@@ -1,11 +1,11 @@
 <?php
 
 
-namespace dutchheight\craftcookieconsent\controllers;
+namespace dutchheight\cookieboss\controllers;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
-use dutchheight\craftcookieconsent\models\Settings;
-use dutchheight\craftcookieconsent\services\ConsentGroupService;
+use dutchheight\cookieboss\CookieBoss;
+use dutchheight\cookieboss\models\Settings;
+use dutchheight\cookieboss\services\ConsentGroupService;
 
 use Craft;
 use craft\web\Controller;
@@ -15,7 +15,7 @@ use yii\web\Response;
 
 /**
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 class ConsentController extends Controller
@@ -29,7 +29,7 @@ class ConsentController extends Controller
 
         $originalData = ConsentGroupService::getAllEnabled();
         $groups = Craft::$app->getRequest()->getRequiredParam('groups');
-        $currentCookieConsents = [];
+        $currentCookieBosss = [];
 
         foreach ($originalData as $consentsGroups) {
             $handle = $consentsGroups->handle;
@@ -44,17 +44,17 @@ class ConsentController extends Controller
             if ($consentsGroups->required) {
                 $allowed = true;
             }
-            $currentCookieConsents[$handle] = boolval($allowed);
+            $currentCookieBosss[$handle] = boolval($allowed);
         }
 
-        $cookieData = json_encode($currentCookieConsents);
-        
+        $cookieData = json_encode($currentCookieBosss);
+
         $cookies = Craft::$app->response->cookies;
-        $cookies->remove('craft-cookie-consent');
+        $cookies->remove('cookie-boss');
         $cookies->add(new Cookie([
-            'name' => 'craft-cookie-consent',
-            'value' => json_encode($currentCookieConsents),
-            'expire' => time() + CraftCookieConsent::$settings->cookieTime
+            'name' => 'cookie-boss',
+            'value' => json_encode($currentCookieBosss),
+            'expire' => time() + CookieBoss::$settings->cookieTime
         ]));
 
         return $cookieData;

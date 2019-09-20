@@ -1,5 +1,5 @@
 {
-    "name": "dutchheight/craft-cookie-consent",
+    "name": "dutchheight/craft-cookie-boss",
     "description": "Allow your visitors to set there cookie preference.",
     "type": "craft-plugin",
     "version": "1.0.0",
@@ -8,11 +8,13 @@
         "cms",
         "craftcms",
         "craft-plugin",
-        "craft cookie consent"
+        "craft cookie",
+        "craft cookie consent",
+        "craft cookie boss"
     ],
     "support": {
-        "docs": "https://github.com/https://github.com/dutchheight/craft-cookie-consent/blob/master/README.md",
-        "issues": "https://github.com/https://github.com/dutchheight/craft-cookie-consent/issues"
+        "docs": "https://github.com/https://github.com/dutchheight/craft-cookie-boss/blob/master/README.md",
+        "issues": "https://github.com/https://github.com/dutchheight/craft-cookie-boss/issues"
     },
     "license": "MIT",
     "authors": [
@@ -26,14 +28,14 @@
     },
     "autoload": {
         "psr-4": {
-          "dutchheight\\craftcookieconsent\\": "src/"
+          "dutchheight\\cookieboss\\": "src/"
         }
     },
     "extra": {
-        "name": "Craft Cookie Consent",
-        "handle": "craft-cookie-consent",
+        "name": "Cookie Boss",
+        "handle": "cookie-boss",
         "hasCpSettings": true,
-        "changelogUrl": "https://raw.githubusercontent.com/https://github.com/dutchheight/craft-cookie-consent/master/CHANGELOG.md",
-        "class": "dutchheight\\craftcookieconsent\\CraftCookieConsent"
+        "changelogUrl": "https://raw.githubusercontent.com/https://github.com/dutchheight/craft-cookie-boss/master/CHANGELOG.md",
+        "class": "dutchheight\\cookieboss\\CookieBoss"
     }
 }

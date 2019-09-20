@@ -1,4 +1,4 @@
-# Craft Cookie consent Changelog
+# Craft Cookie boss Changelog
 
 All notable changes to this project will be documented in this file.
 

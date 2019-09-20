@@ -1,11 +1,11 @@
 <?php
 
-namespace dutchheight\craftcookieconsent\controllers;
+namespace dutchheight\cookieboss\controllers;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
-use dutchheight\craftcookieconsent\models\Settings;
-use dutchheight\craftcookieconsent\services\ConsentGroupService;
-use dutchheight\craftcookieconsent\services\CookieDescriptionService;
+use dutchheight\cookieboss\CookieBoss;
+use dutchheight\cookieboss\models\Settings;
+use dutchheight\cookieboss\services\ConsentGroupService;
+use dutchheight\cookieboss\services\CookieDescriptionService;
 
 use Craft;
 use craft\web\Controller;
@@ -18,7 +18,7 @@ use yii\web\NotFoundHttpException;
 
 /**
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 class SettingsController extends Controller
@@ -29,7 +29,7 @@ class SettingsController extends Controller
         $variables = [];
 
         if (!$settings) {
-            $settings = CraftCookieConsent::$settings;
+            $settings = CookieBoss::$settings;
         }
 
         $variables['crumbs'] = [
@@ -39,7 +39,7 @@ class SettingsController extends Controller
         // Reformat to days
         $settings['cookieTime'] = $settings['cookieTime'] / 86400;
         $settings['cookiesPageId'] = Entry::findOne(['id' => $settings['cookiesPageId']]);
-        
+
         $variables['consentGroups'] = ConsentGroupService::getAll();
         $variables['consentGroupsSelectOptions'] = ConsentGroupService::getAllAsSelectOptions();
         $variables['cookies'] = CookieDescriptionService::getAll();
@@ -51,20 +51,20 @@ class SettingsController extends Controller
                 'url' => '#list-general'
             ],
             'popup' => [
-                'label' => Craft::t('craft-cookie-consent', 'Popup'),
+                'label' => Craft::t('cookie-boss', 'Popup'),
                 'url' => '#list-popup'
             ],
             'consent-groups' => [
-                'label' => Craft::t('craft-cookie-consent', 'Consent groups'),
+                'label' => Craft::t('cookie-boss', 'Consent groups'),
                 'url' => '#list-consent-groups'
             ],
             'cookies' => [
-                'label' => Craft::t('craft-cookie-consent', 'Cookies'),
+                'label' => Craft::t('cookie-boss', 'Cookies'),
                 'url' => '#list-cookies'
             ]
         ];
 
-        return $this->renderTemplate('craft-cookie-consent/settings', $variables);
+        return $this->renderTemplate('cookie-boss/settings', $variables);
     }
 
 
@@ -78,7 +78,7 @@ class SettingsController extends Controller
     public function actionSaveGeneral()
     {
         $this->requirePostRequest();
-        $plugin = Craft::$app->getPlugins()->getPlugin('craft-cookie-consent');
+        $plugin = Craft::$app->getPlugins()->getPlugin('cookie-boss');
 
         if (!$plugin) {
             throw new NotFoundHttpException(Craft::t('app', 'Plugin not found.'));
@@ -103,7 +103,7 @@ class SettingsController extends Controller
         $settings['enabled']            = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
         $settings['presentGroups']       = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
         $settings['forceAccept']        = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
-        
+
         $settings['cookieTime']         = Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') * 86400;
         $settings['title']              = Craft::$app->getRequest()->getRequiredBodyParam('title');
         $settings['message']            = Craft::$app->getRequest()->getRequiredBodyParam('message');

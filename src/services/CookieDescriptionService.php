@@ -1,13 +1,13 @@
 <?php
 
-namespace dutchheight\craftcookieconsent\services;
+namespace dutchheight\cookieboss\services;
 
 use Craft;
 use craft\base\Component;
-use dutchheight\craftcookieconsent\records\CookieDescription;
+use dutchheight\cookieboss\records\CookieDescription;
 
 class CookieDescriptionService extends Component {
-    
+
     public static function getAll($consentGroupHandle = null) {
         $cd = CookieDescription::find();
         if (!is_null($consentGroupHandle)) {
@@ -32,7 +32,7 @@ class CookieDescriptionService extends Component {
     }
 
     public static function updateAll(Array $groups) {
-        
+
         // All id's that are left over should be deleted
         $currentIds = CookieDescription::find()->select(['id'])->asArray()->all();
         $currentIds = array_map('self::selectId', $currentIds);
@@ -47,7 +47,7 @@ class CookieDescriptionService extends Component {
             } else {
                 $cd = new CookieDescription();
             }
-            
+
             $cd->enabled        = (!empty($group["enabled"]) ? $group["enabled"] : 0);
             $cd->consentGroupId = $group["consentGroupId"];
             $cd->name           = $group["name"];
@@ -65,7 +65,7 @@ class CookieDescriptionService extends Component {
             $deleteIds = implode(', ', $currentIds);
             CookieDescription::deleteAll('id IN (' . $deleteIds . ')');
         }
-        
+
         return true;
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace dutchheight\craftcookieconsent\services;
+namespace dutchheight\cookieboss\services;
 
 use Craft;
 use craft\base\Component;
-use dutchheight\craftcookieconsent\records\ConsentGroup;
+use dutchheight\cookieboss\records\ConsentGroup;
 
 class ConsentService extends Component {
-    
+
     /**
      *
      * @return Boolean
@@ -30,7 +30,7 @@ class ConsentService extends Component {
      * @return Boolean
      */
     public static function hasConsentCookie() {
-        return Craft::$app->getRequest()->getCookies()->has('craft-cookie-consent');
+        return Craft::$app->getRequest()->getCookies()->has('cookie-boss');
     }
 
     /**
@@ -38,6 +38,6 @@ class ConsentService extends Component {
      * @return Array
      */
     public static function getConsentCookies() {
-        return Craft::$app->getRequest()->getCookies()->get('craft-cookie-consent');
+        return Craft::$app->getRequest()->getCookies()->get('cookie-boss');
     }
 }

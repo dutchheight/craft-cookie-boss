@@ -1,6 +1,6 @@
 <?php
 /**
- * Craft Cookie consent plugin for Craft CMS 3.x
+ * Craft Cookie boss plugin for Craft CMS 3.x
  *
  * Allow your visitors to set there cookie preference.
  *
@@ -8,11 +8,10 @@
  * @copyright Copyright (c) 2019 Dutch Height
  */
 
-namespace dutchheight\craftcookieconsent;
+namespace dutchheight\cookieboss;
 
-use dutchheight\craftcookieconsent\variables\CraftCookieConsentVariable;
-use dutchheight\craftcookieconsent\twigextensions\CraftCookieConsentTwigExtension;
-use dutchheight\craftcookieconsent\models\Settings;
+use dutchheight\cookieboss\variables\CookieBossVariable;
+use dutchheight\cookieboss\models\Settings;
 
 use Craft;
 use craft\base\Plugin;
@@ -37,22 +36,22 @@ use yii\base\Event;
  * https://craftcms.com/docs/plugins/introduction
  *
  * @author    Dutch Height
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  *
  * @property  Settings $settings
  * @method    Settings getSettings()
  */
-class CraftCookieConsent extends Plugin
+class CookieBoss extends Plugin
 {
     // Static Properties
     // =========================================================================
 
     /**
      * Static property that is an instance of this plugin class so that it can be accessed via
-     * CraftCookieConsent::$plugin
+     * CookieBoss::$plugin
      *
-     * @var CraftCookieConsent
+     * @var CookieBoss
      */
     public static $plugin;
 
@@ -77,7 +76,7 @@ class CraftCookieConsent extends Plugin
 
     /**
      * Set our $plugin static property to this class so that it can be accessed via
-     * CraftCookieConsent::$plugin
+     * CookieBoss::$plugin
      *
      * Called after the plugin class is instantiated; do any one-time initialization
      * here such as hooks and events.
@@ -99,7 +98,7 @@ class CraftCookieConsent extends Plugin
             function (Event $event) {
                 /** @var CraftVariable $variable */
                 $variable = $event->sender;
-                $variable->set('craftCookieConsent', CraftCookieConsentVariable::class);
+                $variable->set('cookieBoss', CookieBossVariable::class);
             }
         );
 
@@ -107,7 +106,7 @@ class CraftCookieConsent extends Plugin
             UrlManager::class,
             UrlManager::EVENT_REGISTER_SITE_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
-                $event->rules['craft-cookie-consent/save-consent-settings'] = 'craft-cookie-consent/consent/save-consent-settings';
+                $event->rules['cookie-boss/save-consent-settings'] = 'cookie-boss/consent/save-consent-settings';
             }
         );
 
@@ -123,7 +122,7 @@ class CraftCookieConsent extends Plugin
      */
     public function getSettingsResponse()
     {
-        return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('craft-cookie-consent/settings'));
+        return Craft::$app->getResponse()->redirect(UrlHelper::cpUrl('cookie-boss/settings'));
     }
 
     // Protected Methods
@@ -148,7 +147,7 @@ class CraftCookieConsent extends Plugin
             function (RegisterUrlRulesEvent $event) {
                 $event->rules = array_merge(
                     $event->rules,
-                    ['craft-cookie-consent/settings' => 'craft-cookie-consent/settings/plugin-settings']
+                    ['cookie-boss/settings' => 'cookie-boss/settings/plugin-settings']
                 );
             }
         );

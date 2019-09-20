@@ -1,12 +1,12 @@
 /**
- * Craft Cookie consent plugin for Craft CMS
+ * Craft Cookie boss plugin for Craft CMS
  *
- * Craft Cookie consent JS
+ * Craft Cookie boss JS
  *
  * @author    Dutch Height
  * @copyright Copyright (c) 2019 Dutch Height
  * @link      www.dutchheight.com
- * @package   CraftCookieConsent
+ * @package   CookieBoss
  * @since     1.0.0
  */
 
@@ -37,8 +37,8 @@ Vue.component('consent-group', {
     `
 });
 
-var craftCookieConsent = new Vue({
-    el: '#cookie-consent',
+var CookieBoss = new Vue({
+    el: '#cookie-boss',
     props: ['hideAfter'],
     delimiters: ['${', '}'],
     data: {
@@ -49,7 +49,7 @@ var craftCookieConsent = new Vue({
         toggled: {}
     },
     created: function () {
-        var autoHide = window.craftCookieConsentHideAfter;
+        var autoHide = window.cookieBossHideAfter;
         if (autoHide > 0) {
             this.timer = setTimeout(this.accept, autoHide * 1000);
         }
@@ -74,14 +74,13 @@ var craftCookieConsent = new Vue({
                 'groups': this.toggled,
                 [window.csrfParam]: window.csrfToken
             };
-            
-            axios({ method: 'POST', url: '/craft-cookie-consent/save-consent-settings', data: data}).then((data) => {
+
+            axios({ method: 'POST', url: '/cookie-boss/save-consent-settings', data: data}).then((data) => {
                 window.location.reload();
             });
         },
         toggledEvent: function(event) {
             this.toggled[event.handle] = event.defaultValue;
-            console.log(JSON.stringify(this.toggled));
         }
     },
     watch: {

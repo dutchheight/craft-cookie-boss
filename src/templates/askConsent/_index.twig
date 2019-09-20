@@ -7,24 +7,24 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {% endif %}
 
-    {% do view.registerAssetBundle("dutchheight\\craftcookieconsent\\assetbundles\\craftcookieconsent\\CraftCookieConsentAsset") %}
-    {% set baseAssetsUrl = view.getAssetManager().getPublishedUrl('@dutchheight/craftcookieconsent/assetbundles/craftcookieconsent/dist', true) %}
+    {% do view.registerAssetBundle("dutchheight\\cookieboss\\assetbundles\\cookieboss\\CookieBossAsset") %}
+    {% set baseAssetsUrl = view.getAssetManager().getPublishedUrl('@dutchheight/cookieboss/assetbundles/cookieboss/dist', true) %}
     {% set checkedIcon = baseAssetsUrl ~ '/img/check-solid.svg' %}
     {% set lockedIcon = baseAssetsUrl ~ '/img/lock-solid.svg' %}
 
     <script>
         window.csrfParam = "{{ craft.app.request.csrfParam }}"
         window.csrfToken = "{{ craft.app.request.csrfToken }}"
-        window.craftCookieConsentHideAfter = "{{ settings.acceptAfterSeconds }}"
+        window.cookieBossHideAfter = "{{ settings.acceptAfterSeconds }}"
     </script>
 
-    <div id="cookie-consent" v-if="show">
+    <div id="cookie-boss" v-if="show">
         {% if settings.forceAccept %}
-            <div id="cookie-consent-forcer">${ toggleForceAccept({{ settings.forceAccept }}) }</div>
+            <div id="cookie-boss-forcer">${ toggleForceAccept({{ settings.forceAccept }}) }</div>
         {% endif %}
-        
+
         {% if settings.presentGroups %}
-            <div id="cookie-consent-modal" class="{{ templateSettings.position }}">
+            <div id="cookie-boss-modal" class="{{ templateSettings.position }}">
                 <div id="container" v-if="!settingsOpen">
                     <h3 class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.title }}</h3>
                     <p class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.message }}</p>
@@ -35,7 +35,7 @@
                         <a class="accept noselect" v-on:click="accept()">{{ settings.acceptButtonText }}</a>
                     </div>
                 </div>
-                
+
                 <div id="container" class="more-detail" v-if="settingsOpen">
                     <h3 class="item-wrapper item-wrapper-padding" style="width: 100%;">{{ settings.title }}</h3>
                     <p class="item-wrapper item-wrapper-padding" style="width: 100%;">{{ settings.messageSettings }}</p>
@@ -44,7 +44,7 @@
                             <consent-group :item="{{ group.toArray()|json_encode }}" checked-icon-path="{{ checkedIcon }}" locked-icon-path="{{ lockedIcon }}" @toggled="toggledEvent"></consent-group>
                         {% endfor %}
                     </div>
-                    
+
                     <div class="item-wrapper item-wrapper-padding" style="width: 100%;">
                         <a class="accept noselect" v-on:click="accept()">{{ settings.acceptButtonText }}</a>
                     </div>
@@ -52,14 +52,14 @@
             </div>
 
         {% else %}
-        
-            <div id="cookie-consent-modal" class="{{ templateSettings.position }}">
+
+            <div id="cookie-boss-modal" class="{{ templateSettings.position }}">
                 <div id="container">
                     <h3 class="item-wrapper" style="width: 100%;">{{ settings.title }}</h3>
                     <p class="item-wrapper" style="width: 100%;">
                         {{ settings.message }}
                         {% if settings.cookiesPageId %}
-                            {{ 'For more info visit our'|t('craft-cookie-consent') }} <a href="{{ settings.cookiesPageId.url }}">{{ 'Cookie page'|t('craft-cookie-consent') }}</a>
+                            {{ 'For more info visit our'|t('cookie-boss') }} <a href="{{ settings.cookiesPageId.url }}">{{ 'Cookie page'|t('cookie-boss') }}</a>
                         {% endif %}
                     </p>
                     <div class="item-wrapper" style="width: 100%;">
