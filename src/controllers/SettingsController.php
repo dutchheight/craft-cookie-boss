@@ -38,7 +38,9 @@ class SettingsController extends Controller
 
         // Reformat to days
         $settings['cookieTime'] = $settings['cookieTime'] / 86400;
-        $settings['cookiesPageId'] = Entry::findOne(['id' => $settings['cookiesPageId']]);
+        if (!is_null($settings['cookiesPageId'])) {
+            $settings['cookiesPageId'] = Entry::findOne(['id' => $settings['cookiesPageId']]);
+        }
 
         $variables['consentGroups'] = ConsentGroupService::getAll();
         $variables['consentGroupsSelectOptions'] = ConsentGroupService::getAllAsSelectOptions();

@@ -51,11 +51,11 @@ class Settings extends Model
     public $enabled = true;
 
     /**
-    * If false cookies are allowed when using the website
+    * If true the default modal presents all cookie groups
     *
     * @var boolean
     */
-    public $presentGroups = false;
+    public $presentGroups = true;
 
     /**
     * If false cookies are allowed when using the website

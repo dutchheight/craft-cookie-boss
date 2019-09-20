@@ -36,8 +36,10 @@ class CookieDescriptionService extends Component {
         // All id's that are left over should be deleted
         $currentIds = CookieDescription::find()->select(['id'])->asArray()->all();
         $currentIds = array_map('self::selectId', $currentIds);
-
         foreach ($groups as $group) {
+            if ($group["name"] == "") {
+                continue;
+            }
             if ($group['id']) {
                 // Delete from array because id is still present
                 if (($key = array_search($group['id'], $currentIds)) !== false) {

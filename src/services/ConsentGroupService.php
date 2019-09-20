@@ -52,6 +52,9 @@ class ConsentGroupService extends Component {
         $currentIds = array_map('self::selectId', $currentIds);
 
         foreach ($groups as $group) {
+            if ($group["enabled"] == "") {
+                continue;
+            }
             if ($group['id']) {
                 // Delete from array because id is still present
                 if (($key = array_search($group['id'], $currentIds)) !== false) {

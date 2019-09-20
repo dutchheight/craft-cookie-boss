@@ -9,14 +9,14 @@
         "craftcms",
         "craft-plugin",
         "craft cookie",
-        "craft cookie consent",
-        "craft cookie boss"
+        "craft cookie boss",
+        "craft cookie consent"
     ],
     "support": {
         "docs": "https://github.com/https://github.com/dutchheight/craft-cookie-boss/blob/master/README.md",
         "issues": "https://github.com/https://github.com/dutchheight/craft-cookie-boss/issues"
     },
-    "license": "MIT",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Dutch Height",

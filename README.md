@@ -28,7 +28,7 @@ Modal without settings:
 ![Modal without settings](resources/img/modal-without-settings.png)
 
 ## Requirements
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+This plugin requires Craft CMS 3.0.0 or later.
 
 ## Installation
 
@@ -150,13 +150,12 @@ Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to 
 ```
 ---
 
-## Craft Cookie consent Roadmap
+## Craft Cookie Boss Roadmap
 
 Some things to do, and ideas for potential features:
 
 * More templates (Modals)
-* Support for settings form
+* Support for different settings per site (multisite)
 * Javascript events
-* Release it
 
 Brought to you by [Dutch Height](www.dutchheight.com)
