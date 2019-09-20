@@ -10,7 +10,7 @@
 
 namespace dutchheight\craftcookieconsent\records;
 
-use dutchheight\craftcookieconsent\CraftCookieConsent;
+use dutchheight\craftcookieconsent\services\ConsentService;
 
 use Craft;
 use craft\db\ActiveRecord;
@@ -70,5 +70,11 @@ class ConsentGroup extends ActiveRecord
 
     public function hasConsent() {
         return ConsentService::isConsentWith($this->handle);
+    }
+
+    public function toArray(array $fields = [], array $expand = [], $recursive = true) {
+        $parent = parent::toArray();
+        $parent['hasConsent'] = $this->hasConsent();
+        return $parent;
     }
 }

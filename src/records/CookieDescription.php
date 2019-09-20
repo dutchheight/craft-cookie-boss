@@ -57,9 +57,8 @@ class CookieDescription extends ActiveRecord
         return '{{%craftcookieconsent_cookiedescription}}';
     }
 
-    public function relations()
-    {
-        return array('consentGroup' => array(self::HAS_ONE, 'ConsentGroup', 'consentGroupId'));
+    public function getConsentGroup() {
+        return $this->hasOne(ConsentGroup::className(), ['id' => 'consentGroupId']);
     }
 
     public function rules()

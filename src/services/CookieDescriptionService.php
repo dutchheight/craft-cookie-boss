@@ -18,7 +18,7 @@ class CookieDescriptionService extends Component {
     }
 
     public static function getAllEnabled() {
-        return CookieDescription::find()->where(['enabled' => 1])->orderBy('id')->all();
+        return CookieDescription::find()->where(['enabled' => 1])->orderBy('consentGroupId')->with('consentGroup')->all();
     }
 
     public static function deleteAll() {

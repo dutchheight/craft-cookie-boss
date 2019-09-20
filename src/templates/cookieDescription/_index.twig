@@ -8,13 +8,21 @@
         </tr>
     </thead>
     <tbody>
+        {% set last = '' %}
         {% for cookieDescription in cookieDescriptions %}
-            <tr class="consent-{{ cookieDescription.hasConsent() ? 'true' : 'false' }}">
+            {% if cookieDescription.consentGroup.name != last %}
+                <tr class="cookie-descriptions-group-title">
+                    <td colspan="4">{{ cookieDescription.consentGroup.name }}</td>
+                </tr>
+            {% endif %}
+
+            <tr class="cookie-descriptions consent-{{ cookieDescription.hasConsent() ? 'true' : 'false' }}">
                 <td>{{ cookieDescription.name }}</td>
                 <td>{{ cookieDescription.desc }}</td>
                 <td>{{ cookieDescription.purpose }}</td>
                 <td>{{ cookieDescription.key }}</td>
             </tr>
+            {% set last = cookieDescription.consentGroup.name %}
         {% endfor %}
     </tbody>
 </table>
