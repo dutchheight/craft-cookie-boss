@@ -61,23 +61,25 @@ Display the modal
 Display the modal in the top right corner
 ```craft.craftCookieConsent.getConsents({'position': 'top-right'})```
 
-Display the modal *always*
+Display the modal always:
 ```
 {{ craft.craftCookieConsent.getConsents({}, true) }}
 ```
+---
 
-### Display cookie descriptions
-Display's a table with all enabled cookies. The table has the `#cookie-descriptions` id.
-Eache cookie is provided with the class `consent-true` or `consent-false` depending on the consentgroup's consent.
-`craft.craftCookieConsent.getCookies()` is used to display a table with all `enabled` cookies.
+## Display cookie descriptions
+Display's a table with all enabled cookies. The table has `#cookie-descriptions` as id.
+Eache cookie is provided with the class `.consent-true` or `.consent-false` depending on the consentgroup's consent.
+All cookies are grouped by there group which has the class `.cookie-descriptions-group-title`. If you like more control you can use `craft.craftCookieConsent.getCookiesRaw()`.
 
 #### Examples
 Display a table with all enabled cookies
 ```
 {{ craft.craftCookieConsent.getCookies() }}
 ```
+---
 
-### Get all visitor consents
+## Get all visitor consents
 `craft.craftCookieConsent.getConsents(defaultConcentIfNotSet)` is used to get an array with the visitors consents.
 
 | Attribute | Type | Required | Description |
@@ -91,8 +93,9 @@ Get all consents of the current visitor
 Get all consents of the current visitor. Get default values if noting found.
 ```craft.craftCookieConsent.getConsents(true)```
 
+---
 
-### Get consent by handle
+## Get consent by handle
 `craft.craftCookieConsent.isConsentWith(handle)` is used to get the consent of the current visitor by handle.
 
 | Attribute | Type | Required | Description |
@@ -106,8 +109,9 @@ Get all consents of the current visitor
     We have permission to do marketing stuf
 {% endif %}
 ```
+---
 
-### Get all cookie descriptions
+## Get all cookie descriptions
 `craft.craftCookieConsent.getCookiesRaw()` is used to get all cookie descriptions.
 `craft.craftCookieConsent.getCookiesRaw(consentGroupHandle)` is used to get all cookie descriptions for a consent group.
 
@@ -120,12 +124,12 @@ Get all cookie descriptions
 ```
 craft.craftCookieConsent.getCookiesRaw()
 ```
+---
 
-
-### Custom modal
+## Custom modal
 `craft.craftCookieConsent.getConsentsRaw` will return all raw data which you can use to create a custom modal.
 
-## Adding settings to your cookie page
+### Adding settings to your cookie page
 
 `/craft-cookie-consent/save-consent-settings` accepts `POST` requests with new consent settings.
 Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to get the key and `craft.app.request.csrfToken` to get the actual token.
@@ -143,13 +147,13 @@ Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to 
     },
     "CRAFT_CSRF_TOKEN": "ABC...XYZ"
 ```
+---
 
 ## Craft Cookie consent Roadmap
 
 Some things to do, and ideas for potential features:
 
-* More modal options
-* More templates
+* More templates (Modals)
 * Support for settings form
 * Javascript events
 * Release it
