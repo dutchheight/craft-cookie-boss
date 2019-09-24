@@ -14,7 +14,7 @@ Vue.component('consent-group', {
     props: ['item', 'checkedIconPath', 'lockedIconPath'],
     data: function() {
         return {
-            isActive: this.item.hasConsent || this.item.defaultValue,
+            isActive: (this.item.hasAnyConsent && this.item.hasConsent) || (!this.item.hasAnyConsent && this.item.defaultValue),
         }
     },
     methods: {

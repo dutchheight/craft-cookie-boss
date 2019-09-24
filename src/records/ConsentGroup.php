@@ -75,6 +75,7 @@ class ConsentGroup extends ActiveRecord
     public function toArray(array $fields = [], array $expand = [], $recursive = true) {
         $parent = parent::toArray();
         $parent['hasConsent'] = $this->hasConsent();
+        $parent['hasAnyConsent'] = ConsentService::hasConsentCookie();
         return $parent;
     }
 }

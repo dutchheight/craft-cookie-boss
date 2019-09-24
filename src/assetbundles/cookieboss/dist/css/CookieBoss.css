@@ -220,6 +220,12 @@
         padding: 0 .5rem 0 .5rem;
     }
 
+    #cookie-boss-modal .item-wrapper-padding {
+        margin-top: 0;
+        padding-top: 0;
+        width: 50%;
+    }
+
     #cookie-boss-modal h3 {
         font-weight: bold;
         font-size: 1.25rem;
