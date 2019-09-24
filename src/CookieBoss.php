@@ -152,5 +152,4 @@ class CookieBoss extends Plugin
             }
         );
     }
-
 }
