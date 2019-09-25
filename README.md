@@ -68,8 +68,8 @@ Display the modal always:
 ```
 ---
 
-## Display cookie descriptions
-Display's a table with all enabled cookies. The table has `#cookie-descriptions` as id.
+### Display cookie descriptions
+Display a table with all enabled cookies. The table has `#cookie-descriptions` as id.
 Eache cookie is provided with the class `.consent-true` or `.consent-false` depending on the consentgroup's consent.
 All cookies are grouped by there group which has the class `.cookie-descriptions-group-title`. If you like more control you can use `craft.cookieBoss.getCookiesRaw()`.
 
@@ -80,7 +80,21 @@ Display a table with all enabled cookies
 ```
 ---
 
-## Get all visitor consents
+### Display cookie group toggle checkbox
+Display's a checkbox which toggles the specified consent group. For more control see 'Toggle consent group with a form'
+
+| Attribute | Type | Required | Description |
+|:----------|:-----|:---------|:------------|
+|handle|string|true|Use a handle from the settings|
+
+#### Examples
+Display a checkbox which can be used to toggle a consent group
+```
+{{ craft.cookieBoss.toggleConsentGroupForm('marketing') }}
+```
+---
+
+### Get all visitor consents
 `craft.cookieBoss.getConsents(defaultConcentIfNotSet)` is used to get an array with the visitors consents.
 
 | Attribute | Type | Required | Description |
@@ -96,7 +110,7 @@ Get all consents of the current visitor. Get default values if noting found.
 
 ---
 
-## Get consent by handle
+### Get if visitor gave consent for cookie group
 `craft.cookieBoss.isConsentWith(handle)` is used to get the consent of the current visitor by handle.
 
 | Attribute | Type | Required | Description |
@@ -104,7 +118,7 @@ Get all consents of the current visitor. Get default values if noting found.
 |handle|string|true|Use a handle from the settings|
 
 #### Examples
-Get all consents of the current visitor
+Get consents of the current visitor
 ```
 {% if craft.cookieBoss.isConsentWith('marketing') %}
     We have permission to do marketing stuf
@@ -112,7 +126,35 @@ Get all consents of the current visitor
 ```
 ---
 
-## Get all cookie descriptions
+### Get all consent groups
+`craft.cookieBoss.getConsentsGroupsRaw(false)` is used to get all consent groups.
+
+| Attribute | Type | Required | Description |
+|:----------|:-----|:---------|:------------|
+|onlyEnabled|boolean|false|Only return enabled consent groups|
+
+#### Examples
+Get all consent groups.
+```
+craft.cookieBoss.getConsentsGroupsRaw()
+```
+---
+
+### Get all consent groups by handle
+`craft.cookieBoss.getConsentsGroupRawByHandle(consentGroupHandle)` is used to get all cookie groups by handle.
+
+| Attribute | Type | Required | Description |
+|:----------|:-----|:---------|:------------|
+|consentGroupHandle|string|true|Use a handle from the settings|
+
+#### Examples
+Get all cookie groups by handle.
+```
+craft.cookieBoss.getConsentsGroupRawByHandle()
+```
+---
+
+### Get all cookie descriptions
 `craft.cookieBoss.getCookiesRaw()` is used to get all cookie descriptions.
 `craft.cookieBoss.getCookiesRaw(consentGroupHandle)` is used to get all cookie descriptions for a consent group.
 
@@ -127,10 +169,10 @@ craft.cookieBoss.getCookiesRaw()
 ```
 ---
 
-## Custom modal
-`craft.cookieBoss.getConsentsRaw` will return all raw data which you can use to create a custom modal.
+### Custom modal
+`craft.cookieBoss.getConsentsGroupsRaw()` will return all raw data which you can use to create a custom modal.
 
-### Adding settings to your cookie page
+### Save the settings
 `/craft-cookie-boss/save-consent-settings` accepts `POST` requests with new consent settings.
 Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to get the key and `craft.app.request.csrfToken` to get the actual token.
 
@@ -149,23 +191,29 @@ Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to 
 ```
 ---
 
-## Toggle consent group with a form
+### Toggle a consent group with a custom form
 Do a `POST` request to `/cookie-boss/toggle-consent-group`.
 For each group you like to toggle you need to pass a boolean represented by the handle name.
 
 #### Example form
 ```
-<form action="/cookie-boss/toggle-consent-group" method="POST">
+{% set handle = 'marketing %}
+{% set consentGroup = craft.cookieBoss.getConsentsGroupRawByHandle(handle) %}
+<form id="toggle-{{ handle }}-form" action="/cookie-boss/toggle-consent-group" method="POST">
     {{ csrfInput() }}
     {{ redirectInput(craft.request.getPath()) }}
-    <input type="checkbox" value="true" name="groups[marketing]" id="toggle-marketing" {% if craft.cookieBoss.isConsentWith('marketing') %} checked {% endif %}>
-    <button type="submit">Submit</button>
+    <input type="hidden" name="groups[marketing]" value="" />
+    <input type="checkbox" class="inline js-toggle-consentGroup ml-2" value="true"
+        name="groups[{{ handle }}]"
+        onchange="document.getElementById('toggle-{{ handle }}-form').submit();"
+        id="toggle-{{ handle }}-checkbox"
+        {% if consentGroup.required %} disabled {% endif %}
+        {% if consentGroup.hasConsent() or consentGroup.required %}checked {% endif %}>
 </form>
 ```
 ---
 
 ## Craft Cookie Boss Roadmap
-
 Some things to do, and ideas for potential features:
 
 * More templates (Modals)

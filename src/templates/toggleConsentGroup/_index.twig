@@ -1,0 +1,11 @@
+<form id="toggle-{{ handle }}-form" action="/cookie-boss/toggle-consent-group" method="POST">
+    {{ csrfInput() }}
+    {{ redirectInput(craft.request.getPath()) }}
+    <input type="hidden" name="groups[marketing]" value="" />
+    <input type="checkbox" class="inline js-toggle-consentGroup ml-2" value="true"
+        name="groups[{{ handle }}]"
+        onchange="document.getElementById('toggle-{{ handle }}-form').submit();"
+        id="toggle-{{ handle }}-checkbox"
+        {% if consentGroup.required %} disabled {% endif %}
+        {% if consentGroup.hasConsent() or consentGroup.required %}checked {% endif %}>
+</form>

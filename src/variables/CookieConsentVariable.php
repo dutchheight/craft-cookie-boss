@@ -13,11 +13,11 @@ namespace dutchheight\cookieboss\variables;
 use dutchheight\cookieboss\CookieBoss;
 use dutchheight\cookieboss\services\ConsentGroupService;
 use dutchheight\cookieboss\services\CookieDescriptionService;
+use dutchheight\cookieboss\services\ConsentService;
 
 use Craft;
 use craft\web\View;
 use craft\elements\Entry;
-use dutchheight\cookieboss\services\ConsentService;
 
 /**
  * Cookie consent Variable
@@ -35,6 +35,10 @@ class CookieBossVariable
 {
     // Public Methods
     // =========================================================================
+
+    //
+    // ─── HTML ───────────────────────────────────────────────────────────────────────────
+    //
 
     /**
      * @param null $optional
@@ -65,8 +69,42 @@ class CookieBossVariable
     }
 
     /**
+     * @param null $optional
+     * @return string
+     */
+    public function toggleConsentGroupForm($consentGroupHandle, $options = null)
+    {
+        $view = Craft::$app->getView();
+        $view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        echo $view->renderTemplate('cookie-boss/toggleConsentGroup/_index', [
+            'handle'            => $consentGroupHandle,
+            'consentGroup'      => ConsentGroupService::getAllByHandle($consentGroupHandle),
+            'options'           => $options
+        ]);
+        $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCookies()
+    {
+        $view = Craft::$app->getView();
+        $view->setTemplateMode(View::TEMPLATE_MODE_CP);
+        echo $view->renderTemplate('cookie-boss/cookieDescription/_index', [
+            'cookieDescriptions' => CookieDescriptionService::getAllEnabled()
+        ]);
+        $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
+    }
+
+    //
+    // ─── Checks ───────────────────────────────────────────────────────────────────────────
+    //
+
+    /**
      *
      * @param string $handle
+     * @param boolean $concentIfNotSet
      * @return boolean
      */
     public function isConsentWith($handle, $concentIfNotSet = false)
@@ -75,7 +113,7 @@ class CookieBossVariable
     }
 
     /**
-     *
+     * @var boolean $defaultConcentIfNotSet return default if consent not set
      * @return JSON
      */
     public function getConsents($defaultConcentIfNotSet = false)
@@ -95,32 +133,39 @@ class CookieBossVariable
         return json_decode($cookies->value, true);
     }
 
+    //
+    // ─── Consent groups ───────────────────────────────────────────────────────────────────────────
+    //
+
     /**
-     * @param null $optional
-     * @return string
+     * @param boolean $onlyEnabled only show enabled consent groups
+     * @return Array<CookieDescription>
      */
-    public function getCookies()
+    public function getConsentsGroupsRaw($onlyEnabled = false)
     {
-        $view = Craft::$app->getView();
-        $view->setTemplateMode(View::TEMPLATE_MODE_CP);
-        echo $view->renderTemplate('cookie-boss/cookieDescription/_index', [
-            'cookieDescriptions' => CookieDescriptionService::getAllEnabled()
-        ]);
-        $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
+        if ($onlyEnabled) {
+            return ConsentGroupService::getAllEnabled();
+        }
+
+        return ConsentGroupService::getAll();
     }
 
     /**
-     * @param null $optional
+     * @param string $consentGroupHandle
      * @return string
      */
-    public function getConsentsRaw()
+    public function getConsentsGroupRawByHandle($consentGroupHandle)
     {
-        return ConsentGroupService::getAllEnabled();
+        return ConsentGroupService::getAllByHandle($consentGroupHandle);
     }
 
+    //
+    // ─── Cookies ───────────────────────────────────────────────────────────────────────────
+    //
+
     /**
-     * @param null $optional
-     * @return string
+     * @param string $consentGroupHandle
+     * @return CookieDescription
      */
     public function getCookiesRaw($consentGroupHandle = null)
     {
@@ -130,10 +175,6 @@ class CookieBossVariable
     // Private Methods
     // =========================================================================
 
-    /**
-     *
-     * @return Array
-     */
     private function getDefaultTemplateSettings() {
         return [
             'position' => 'bottom-right'

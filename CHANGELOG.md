@@ -16,3 +16,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.3 - 2019-09-25
 ### Added
 - Toggle consent group with POST form
+
+## 1.0.4 - 2019-09-25
+### Added
+- Toggle consent group form template
+
+### Edit
+- Readme
