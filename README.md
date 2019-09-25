@@ -149,7 +149,7 @@ Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to 
 ```
 ---
 
-## Toggle consent group with form
+## Toggle consent group with a form
 Do a `POST` request to `/cookie-boss/toggle-consent-group`.
 For each group you like to toggle you need to pass a boolean represented by the handle name.
 
