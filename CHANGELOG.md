@@ -12,3 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Edit
 - Modal styling issue
 - Modal didn't showed true state with default on
+
+## 1.0.3 - 2019-09-25
+### Added
+- Toggle consent group with POST form

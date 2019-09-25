@@ -107,6 +107,7 @@ class CookieBoss extends Plugin
             UrlManager::EVENT_REGISTER_SITE_URL_RULES,
             function (RegisterUrlRulesEvent $event) {
                 $event->rules['cookie-boss/save-consent-settings'] = 'cookie-boss/consent/save-consent-settings';
+                $event->rules['cookie-boss/toggle-consent-group'] = 'cookie-boss/consent/toggle-consent-group';
             }
         );
 

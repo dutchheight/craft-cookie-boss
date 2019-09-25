@@ -3,15 +3,10 @@
 
 namespace dutchheight\cookieboss\controllers;
 
-use dutchheight\cookieboss\CookieBoss;
-use dutchheight\cookieboss\models\Settings;
-use dutchheight\cookieboss\services\ConsentGroupService;
-
 use Craft;
 use craft\web\Controller;
 
-use yii\web\Cookie;
-use yii\web\Response;
+use dutchheight\cookieboss\services\ConsentService;
 
 /**
  * @author    Dutch Height
@@ -21,42 +16,26 @@ use yii\web\Response;
 class ConsentController extends Controller
 {
 
-    protected $allowAnonymous = array('save-consent-settings');
+    protected $allowAnonymous = array('save-consent-settings', 'toggle-consent-group');
+
+    public function actionToggleConsentGroup() {
+        $this->requirePostRequest();
+
+        $body = Craft::$app->getRequest()->getBodyParams();
+        ConsentService::saveConsentCookies(
+            ConsentService::generateCookieData($body['groups'] ?? [])
+        );
+
+        $this->redirectToPostedUrl();
+    }
 
     public function actionSaveConsentSettings() {
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
-        $originalData = ConsentGroupService::getAllEnabled();
-        $groups = Craft::$app->getRequest()->getRequiredParam('groups');
-        $currentCookieBosss = [];
+        $currentCookieBoss = ConsentService::generateCookieData(Craft::$app->getRequest()->getRequiredParam('groups'));
+        ConsentService::saveConsentCookies($currentCookieBoss);
 
-        foreach ($originalData as $consentsGroups) {
-            $handle = $consentsGroups->handle;
-            $allowed = false;
-
-            if (key_exists($handle, $groups)) {
-                $allowed = $groups[$handle];
-            } else {
-                $allowed = $consentsGroups->defaultValue;
-            }
-
-            if ($consentsGroups->required) {
-                $allowed = true;
-            }
-            $currentCookieBosss[$handle] = boolval($allowed);
-        }
-
-        $cookieData = json_encode($currentCookieBosss);
-
-        $cookies = Craft::$app->response->cookies;
-        $cookies->remove('cookie-boss');
-        $cookies->add(new Cookie([
-            'name' => 'cookie-boss',
-            'value' => json_encode($currentCookieBosss),
-            'expire' => time() + CookieBoss::$settings->cookieTime
-        ]));
-
-        return $cookieData;
+        return json_encode($currentCookieBoss);
     }
 }

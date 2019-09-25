@@ -131,7 +131,6 @@ craft.cookieBoss.getCookiesRaw()
 `craft.cookieBoss.getConsentsRaw` will return all raw data which you can use to create a custom modal.
 
 ### Adding settings to your cookie page
-
 `/craft-cookie-boss/save-consent-settings` accepts `POST` requests with new consent settings.
 Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to get the key and `craft.app.request.csrfToken` to get the actual token.
 
@@ -147,6 +146,21 @@ Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to 
         "marketing": false
     },
     "CRAFT_CSRF_TOKEN": "ABC...XYZ"
+```
+---
+
+## Toggle consent group with form
+Do a `POST` request to `/cookie-boss/toggle-consent-group`.
+For each group you like to toggle you need to pass a boolean represented by the handle name.
+
+#### Example form
+```
+<form action="/cookie-boss/toggle-consent-group" method="POST">
+    {{ csrfInput() }}
+    {{ redirectInput(craft.request.getPath()) }}
+    <input type="checkbox" value="true" name="groups[marketing]" id="toggle-marketing" {% if craft.cookieBoss.isConsentWith('marketing') %} checked {% endif %}>
+    <button type="submit">Submit</button>
+</form>
 ```
 ---
 
