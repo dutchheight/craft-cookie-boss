@@ -10,10 +10,8 @@
 
 namespace dutchheight\cookieboss\models;
 
-use Craft;
 use craft\base\Model;
 
-use dutchheight\cookieboss\CookieBoss;
 use dutchheight\cookieboss\services\ConsentGroupService;
 use dutchheight\cookieboss\services\CookieDescriptionService;
 

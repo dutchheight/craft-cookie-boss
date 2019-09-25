@@ -2,7 +2,6 @@
 
 namespace dutchheight\cookieboss\services;
 
-use Craft;
 use craft\base\Component;
 use dutchheight\cookieboss\records\CookieDescription;
 

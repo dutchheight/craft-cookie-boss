@@ -3,14 +3,12 @@
 namespace dutchheight\cookieboss\controllers;
 
 use dutchheight\cookieboss\CookieBoss;
-use dutchheight\cookieboss\models\Settings;
 use dutchheight\cookieboss\services\ConsentGroupService;
 use dutchheight\cookieboss\services\CookieDescriptionService;
 
 use Craft;
 use craft\web\Controller;
 use craft\helpers\UrlHelper;
-use craft\records\Element;
 use craft\elements\Entry;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;

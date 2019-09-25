@@ -10,7 +10,6 @@
 
 namespace dutchheight\cookieboss\records;
 
-use Craft;
 use craft\db\ActiveRecord;
 
 use dutchheight\cookieboss\services\ConsentService;

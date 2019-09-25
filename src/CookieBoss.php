@@ -16,8 +16,6 @@ use dutchheight\cookieboss\models\Settings;
 use Craft;
 use craft\base\Plugin;
 use craft\helpers\UrlHelper;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
 use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\twig\variables\CraftVariable;

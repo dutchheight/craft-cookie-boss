@@ -10,8 +10,6 @@
 
 namespace dutchheight\cookieboss\migrations;
 
-use dutchheight\cookieboss\CookieBoss;
-
 use Craft;
 use craft\config\DbConfig;
 use craft\db\Migration;
