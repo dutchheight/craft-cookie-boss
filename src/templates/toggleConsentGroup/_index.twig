@@ -2,7 +2,7 @@
     {{ csrfInput() }}
     {{ redirectInput(craft.request.getPath()) }}
     <input type="hidden" name="groups[marketing]" value="" />
-    <input type="checkbox" class="inline js-toggle-consentGroup ml-2" value="true"
+    <input type="checkbox" class="inline toggle-consentGroup-checkbox ml-2" value="true"
         name="groups[{{ handle }}]"
         onchange="document.getElementById('toggle-{{ handle }}-form').submit();"
         id="toggle-{{ handle }}-checkbox"
