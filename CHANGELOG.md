@@ -23,3 +23,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Edit
 - Readme
+
+## 1.0.4.1 - 2019-09-25
+
+### Edit
+- Fixed toggle off with toggleConsentGroupForm
