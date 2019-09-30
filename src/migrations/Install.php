@@ -125,6 +125,7 @@ class Install extends Migration
                     'dateUpdated' => $this->dateTime()->notNull(),
                     'uid' => $this->uid(),
                     // Custom columns in the table
+                    'index' => $this->integer(),
                     'consentGroupId' => $this->integer(),
                     'name' => $this->string(255)->notNull()->defaultValue(''),
                     'key' => $this->string(255)->notNull()->defaultValue(''),
@@ -211,6 +212,7 @@ class Install extends Migration
         ], true);
 
         $this->insert('{{%cookieboss_cookiedescription}}', [
+            'index' => 0,
             'consentGroupId' => 1,
             'name' => 'Cookie message',
             'key' => 'craft-cookie-boss',

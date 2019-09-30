@@ -201,7 +201,7 @@ For each group you like to toggle you need to pass a boolean represented by the 
 {% set consentGroup = craft.cookieBoss.getConsentsGroupRawByHandle(handle) %}
 <form id="toggle-{{ handle }}-form" action="/cookie-boss/toggle-consent-group" method="POST">
     {{ csrfInput() }}
-    {{ redirectInput(craft.request.getPath()) }}
+    {{ redirectInput(craft.app.request.pathInfo) }}
     <input type="hidden" name="groups[marketing]" value="" />
     <input type="checkbox" class="inline js-toggle-consentGroup ml-2" value="true"
         name="groups[{{ handle }}]"

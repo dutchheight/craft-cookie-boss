@@ -2,6 +2,7 @@
 
 namespace dutchheight\cookieboss\services;
 
+use Craft;
 use craft\base\Component;
 use dutchheight\cookieboss\records\CookieDescription;
 
@@ -13,11 +14,11 @@ class CookieDescriptionService extends Component {
             $cg = ConsentGroupService::getAllByHandle($consentGroupHandle);
             $cd->where(['consentGroupId' => $cg->id]);
         }
-        return $cd->orderBy('id')->all();
+        return $cd->orderBy('index')->all();
     }
 
     public static function getAllEnabled() {
-        return CookieDescription::find()->where(['enabled' => 1])->orderBy('consentGroupId')->with('consentGroup')->all();
+        return CookieDescription::find()->where(['enabled' => 1])->orderBy('index')->with('consentGroup')->all();
     }
 
     public static function deleteAll() {
@@ -31,11 +32,13 @@ class CookieDescriptionService extends Component {
     }
 
     public static function updateAll(Array $groups) {
-
         // All id's that are left over should be deleted
         $currentIds = CookieDescription::find()->select(['id'])->asArray()->all();
         $currentIds = array_map('self::selectId', $currentIds);
+        $currentIndex = 0;
+
         foreach ($groups as $group) {
+
             if ($group["name"] == "") {
                 continue;
             }
@@ -50,6 +53,7 @@ class CookieDescriptionService extends Component {
             }
 
             $cd->enabled        = (!empty($group["enabled"]) ? $group["enabled"] : 0);
+            $cd->index          = $currentIndex;
             $cd->consentGroupId = $group["consentGroupId"];
             $cd->name           = $group["name"];
             $cd->key            = $group["key"];
@@ -60,6 +64,7 @@ class CookieDescriptionService extends Component {
                 throw new \Exception(json_encode($cd->errors));
             }
             $cd->save();
+            $currentIndex ++;
         }
 
         if (count($currentIds) > 0) {

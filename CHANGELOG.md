@@ -25,6 +25,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Readme
 
 ## 1.0.4.1 - 2019-09-25
-
 ### Edit
 - Fixed toggle off with toggleConsentGroupForm
+
+## 1.0.5 - 2019-09-30
+### Added
+- Added cookies ordering
