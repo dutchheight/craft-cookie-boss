@@ -31,3 +31,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.5 - 2019-09-30
 ### Added
 - Added cookies ordering
+
+## 1.1.0 - 2019-10-04
+### Added
+- Added support for project config
+- Added support for cookie description ordering
+
+### Edit
+- Refactoring
+
+### Fixed
+- Consent group handle generator bug
+- Cookie description handle generator bug

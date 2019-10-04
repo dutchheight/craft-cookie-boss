@@ -10,9 +10,8 @@
 
 namespace dutchheight\cookieboss\records;
 
+use dutchheight\cookieboss\CookieBoss;
 use craft\db\ActiveRecord;
-
-use dutchheight\cookieboss\services\ConsentService;
 
 /**
  * ConsentGroup Record
@@ -72,6 +71,6 @@ class CookieDescription extends ActiveRecord
             return false;
         }
         $group = $this->hasOne(ConsentGroup::className(), ['id' => 'consentGroupId'])->one();
-        return ConsentService::isConsentWith($group->handle);
+        return CookieBoss::getInstance()->consent->isConsentWith($group->handle);
     }
 }

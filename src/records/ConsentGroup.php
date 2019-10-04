@@ -10,8 +10,7 @@
 
 namespace dutchheight\cookieboss\records;
 
-use dutchheight\cookieboss\services\ConsentService;
-
+use dutchheight\cookieboss\CookieBoss;
 use craft\db\ActiveRecord;
 
 /**
@@ -68,13 +67,13 @@ class ConsentGroup extends ActiveRecord
     }
 
     public function hasConsent() {
-        return ConsentService::isConsentWith($this->handle);
+        return CookieBoss::getInstance()->consent->isConsentWith($this->handle);
     }
 
     public function toArray(array $fields = [], array $expand = [], $recursive = true) {
         $parent = parent::toArray();
         $parent['hasConsent'] = $this->hasConsent();
-        $parent['hasAnyConsent'] = ConsentService::hasConsentCookie();
+        $parent['hasAnyConsent'] = CookieBoss::getInstance()->consent->hasConsentCookie();
         return $parent;
     }
 }

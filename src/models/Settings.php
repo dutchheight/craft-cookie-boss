@@ -12,9 +12,6 @@ namespace dutchheight\cookieboss\models;
 
 use craft\base\Model;
 
-use dutchheight\cookieboss\services\ConsentGroupService;
-use dutchheight\cookieboss\services\CookieDescriptionService;
-
 /**
  * CookieBoss Settings Model
  *
@@ -146,7 +143,7 @@ class Settings extends Model
      * @return array
      */
     public function consentGroups() {
-        return ConsentGroupService::getAll();
+        return CookieBoss::getInstance()->consentGroups->getAll();
     }
 
     /**
@@ -155,6 +152,6 @@ class Settings extends Model
      * @return array
      */
     public function cookieDescriptions() {
-        return CookieDescriptionService::getAll();
+        return CookieBoss::getInstance()->cookieDescriptions->getAll();
     }
 }

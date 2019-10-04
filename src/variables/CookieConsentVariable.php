@@ -11,13 +11,11 @@
 namespace dutchheight\cookieboss\variables;
 
 use dutchheight\cookieboss\CookieBoss;
-use dutchheight\cookieboss\services\ConsentGroupService;
-use dutchheight\cookieboss\services\CookieDescriptionService;
-use dutchheight\cookieboss\services\ConsentService;
 
 use Craft;
 use craft\web\View;
 use craft\elements\Entry;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 /**
  * Cookie consent Variable
@@ -48,7 +46,7 @@ class CookieBossVariable
     {
         $view = Craft::$app->getView();
 
-        if (ConsentService::hasConsentCookie() && !$displayIfCookiesSet) {
+        if (CookieBoss::getInstance()->consent->hasConsentCookie() && !$displayIfCookiesSet) {
             return;
         }
 
@@ -63,7 +61,7 @@ class CookieBossVariable
         echo $view->renderTemplate('cookie-boss/askConsent/_index', [
             'templateSettings'  => $templateSettings,
             'settings'          => $settings,
-            'consentGroups'      => ConsentGroupService::getAllEnabled()
+            'consentGroups'      => CookieBoss::getInstance()->consentGroups->getAllEnabled()
         ]);
         $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
     }
@@ -74,11 +72,16 @@ class CookieBossVariable
      */
     public function toggleConsentGroupForm($consentGroupHandle, $options = null)
     {
+        $consentGroup = CookieBoss::getInstance()->consentGroups->getAllByHandle($consentGroupHandle);
+        if (is_null($consentGroup)) {
+            throw new NotFoundResourceException(Craft::t('cookie-boss', 'Invalid consent group handle: ' . $consentGroupHandle));
+        }
+
         $view = Craft::$app->getView();
         $view->setTemplateMode(View::TEMPLATE_MODE_CP);
         echo $view->renderTemplate('cookie-boss/toggleConsentGroup/_index', [
             'handle'            => $consentGroupHandle,
-            'consentGroup'      => ConsentGroupService::getAllByHandle($consentGroupHandle),
+            'consentGroup'      => $consentGroup,
             'options'           => $options
         ]);
         $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
@@ -92,7 +95,7 @@ class CookieBossVariable
         $view = Craft::$app->getView();
         $view->setTemplateMode(View::TEMPLATE_MODE_CP);
         echo $view->renderTemplate('cookie-boss/cookieDescription/_index', [
-            'cookieDescriptions' => CookieDescriptionService::getAllEnabled()
+            'cookieDescriptions' => CookieBoss::getInstance()->cookieDescriptions->getAllEnabled()
         ]);
         $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
     }
@@ -109,7 +112,7 @@ class CookieBossVariable
      */
     public function isConsentWith($handle, $concentIfNotSet = false)
     {
-        return ConsentService::isConsentWith($handle, $concentIfNotSet);
+        return CookieBoss::getInstance()->consent->isConsentWith($handle, $concentIfNotSet);
     }
 
     /**
@@ -118,10 +121,10 @@ class CookieBossVariable
      */
     public function getConsents($defaultConcentIfNotSet = false)
     {
-        if (!ConsentService::hasConsentCookie()) {
+        if (!CookieBoss::getInstance()->consent->hasConsentCookie()) {
             if ($defaultConcentIfNotSet) {
                 $consents = [];
-                foreach (ConsentGroupService::getAllEnabled() as $consent) {
+                foreach (CookieBoss::getInstance()->consentGroups->getAllEnabled() as $consent) {
                     $consents[$consent['handle']] = (bool)$consent['defaultValue'];
                 }
                 return $consents;
@@ -129,7 +132,7 @@ class CookieBossVariable
             return [];
         }
 
-        $cookies = ConsentService::getConsentCookies();
+        $cookies = CookieBoss::getInstance()->consent->getConsentCookies();
         return json_decode($cookies->value, true);
     }
 
@@ -144,10 +147,10 @@ class CookieBossVariable
     public function getConsentsGroupsRaw($onlyEnabled = false)
     {
         if ($onlyEnabled) {
-            return ConsentGroupService::getAllEnabled();
+            return CookieBoss::getInstance()->consentGroups->getAllEnabled();
         }
 
-        return ConsentGroupService::getAll();
+        return CookieBoss::getInstance()->consentGroups->getAll();
     }
 
     /**
@@ -156,7 +159,7 @@ class CookieBossVariable
      */
     public function getConsentsGroupRawByHandle($consentGroupHandle)
     {
-        return ConsentGroupService::getAllByHandle($consentGroupHandle);
+        return CookieBoss::getInstance()->consentGroups->getAllByHandle($consentGroupHandle);
     }
 
     //
@@ -169,7 +172,7 @@ class CookieBossVariable
      */
     public function getCookiesRaw($consentGroupHandle = null)
     {
-        return CookieDescriptionService::getAll($consentGroupHandle);
+        return CookieBoss::getInstance()->cookieDescriptions->getAll($consentGroupHandle);
     }
 
     // Private Methods

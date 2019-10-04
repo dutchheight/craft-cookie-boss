@@ -20,7 +20,6 @@
 
 {% set title = 'Cookie Boss Settings'|t('cookie-boss') %}
 
-
 {% block content %}
     <input type="hidden" name="action" value="cookie-boss/settings/save-general">
     {{ csrfInput() }}
@@ -229,16 +228,18 @@
     </div>
 {% endblock %}
 
-
 {% js %}
-    {% for item in consentGroups %}
-        new Craft.HandleGenerator('textarea[name=consentGroups\\[{{ loop.index0 }}\\]\\[name\\]]', 'textarea[name=consentGroups\\[{{ loop.index0 }}\\]\\[handle\\]]');
-    {% endfor %}
-
     $('.btn.add.icon').click(function($event) {
         setTimeout(function() {
             var consentGroupsNewRow = $('#consentGroups >tbody >tr').length - 1;
             new Craft.HandleGenerator('textarea[name=consentGroups\\[' + consentGroupsNewRow + '\\]\\[name\\]]', 'textarea[name=consentGroups\\[' + consentGroupsNewRow + '\\]\\[handle\\]]');
+        }, 500);
+    });
+
+    $('.btn.add.icon').click(function($event) {
+        setTimeout(function() {
+            var cookieDescriptionNewRow = $('#cookies >tbody >tr').length - 1;
+            new Craft.HandleGenerator('textarea[name=cookies\\[' + cookieDescriptionNewRow + '\\]\\[name\\]]', 'textarea[name=cookies\\[' + cookieDescriptionNewRow + '\\]\\[key\\]]');
         }, 500);
     });
 {% endjs %}

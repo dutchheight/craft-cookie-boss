@@ -10,8 +10,7 @@
 
 namespace dutchheight\cookieboss;
 
-use dutchheight\cookieboss\variables\CookieBossVariable;
-use dutchheight\cookieboss\models\Settings;
+use yii\base\Event;
 
 use Craft;
 use craft\base\Plugin;
@@ -20,8 +19,10 @@ use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
 use craft\web\twig\variables\CraftVariable;
 
-use yii\base\Event;
-
+use dutchheight\cookieboss\services\ConsentGroupService;
+use dutchheight\cookieboss\services\CookieDescriptionService;
+use dutchheight\cookieboss\variables\CookieBossVariable;
+use dutchheight\cookieboss\models\Settings;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -88,6 +89,7 @@ class CookieBoss extends Plugin
         parent::init();
         self::$plugin = $this;
         self::$settings = $this->getSettings();
+        $this->registerComponents();
 
         // Register our variables
         Event::on(
@@ -114,6 +116,19 @@ class CookieBoss extends Plugin
         if ($request->getIsCpRequest() && !$request->getIsConsoleRequest()) {
             $this->registerCpEventListeners();
         }
+
+        // Add project config event listeners
+        $cgKey = ConsentGroupService::CONFIG_KEY . '.{uid}';
+        Craft::$app->projectConfig
+            ->onAdd($cgKey, [$this->consentGroups, 'handleChangedConsentGroup'])
+            ->onUpdate($cgKey, [$this->consentGroups, 'handleChangedConsentGroup'])
+            ->onRemove($cgKey, [$this->consentGroups, 'handleDeleteConsentGroup']);
+
+        $cdKey = CookieDescriptionService::CONFIG_KEY . '.{uid}';
+        Craft::$app->projectConfig
+            ->onAdd($cdKey, [$this->cookieDescriptions, 'handleChangedCookieDescription'])
+            ->onUpdate($cdKey, [$this->cookieDescriptions, 'handleChangedCookieDescription'])
+            ->onRemove($cdKey, [$this->cookieDescriptions, 'handleDeleteCookieDescription']);
     }
 
     /**
@@ -150,5 +165,13 @@ class CookieBoss extends Plugin
                 );
             }
         );
+    }
+
+    protected function registerComponents() {
+        $this->setComponents([
+            'consentGroups'         => \dutchheight\cookieboss\services\ConsentGroupService::class,
+            'cookieDescriptions'    => \dutchheight\cookieboss\services\CookieDescriptionService::class,
+            'consent'               => \dutchheight\cookieboss\services\ConsentService::class
+        ]);
     }
 }

@@ -3,8 +3,6 @@
 namespace dutchheight\cookieboss\controllers;
 
 use dutchheight\cookieboss\CookieBoss;
-use dutchheight\cookieboss\services\ConsentGroupService;
-use dutchheight\cookieboss\services\CookieDescriptionService;
 
 use Craft;
 use craft\web\Controller;
@@ -40,9 +38,9 @@ class SettingsController extends Controller
             $settings['cookiesPageId'] = Entry::findOne(['id' => $settings['cookiesPageId']]);
         }
 
-        $variables['consentGroups'] = ConsentGroupService::getAll();
-        $variables['consentGroupsSelectOptions'] = ConsentGroupService::getAllAsSelectOptions();
-        $variables['cookies'] = CookieDescriptionService::getAll();
+        $variables['consentGroups'] = CookieBoss::getInstance()->consentGroups->getAll();
+        $variables['consentGroupsSelectOptions'] = CookieBoss::getInstance()->consentGroups->getAllAsSelectOptions();
+        $variables['cookies'] = CookieBoss::getInstance()->cookieDescriptions->getAll();
 
         $variables['settings'] = $settings;
         $variables['tabs'] = [
@@ -86,7 +84,7 @@ class SettingsController extends Controller
 
         $cookies        = Craft::$app->getRequest()->getRequiredBodyParam('cookies');
         $cookies        = empty($cookies) ? [] : $cookies;
-        $update = CookieDescriptionService::updateAll($cookies);
+        $update = CookieBoss::getInstance()->cookieDescriptions->updateAll($cookies);
         if (is_array($update)) {
             $this->error($plugin);
             return null;
@@ -94,7 +92,7 @@ class SettingsController extends Controller
 
         $consentGroups  = Craft::$app->getRequest()->getRequiredBodyParam('consentGroups');
         $consentGroups  = empty($consentGroups) ? [] : $consentGroups;
-        $update = ConsentGroupService::updateAll($consentGroups);
+        $update = CookieBoss::getInstance()->consentGroups->updateAll($consentGroups);
         if (is_array($update)) {
             $this->error($plugin);
             return null;

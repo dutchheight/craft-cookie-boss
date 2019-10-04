@@ -5,8 +5,7 @@ namespace dutchheight\cookieboss\controllers;
 
 use Craft;
 use craft\web\Controller;
-
-use dutchheight\cookieboss\services\ConsentService;
+use dutchheight\cookieboss\CookieBoss;
 
 /**
  * @author    Dutch Height
@@ -22,8 +21,8 @@ class ConsentController extends Controller
         $this->requirePostRequest();
 
         $body = Craft::$app->getRequest()->getBodyParams();
-        ConsentService::saveConsentCookies(
-            ConsentService::generateCookieData($body['groups'] ?? [])
+        CookieBoss::getInstance()->consent->saveConsentCookies(
+            CookieBoss::getInstance()->consent->generateCookieData($body['groups'] ?? [])
         );
 
         $this->redirectToPostedUrl();
@@ -33,8 +32,8 @@ class ConsentController extends Controller
         $this->requireAcceptsJson();
         $this->requirePostRequest();
 
-        $currentCookieBoss = ConsentService::generateCookieData(Craft::$app->getRequest()->getRequiredParam('groups'));
-        ConsentService::saveConsentCookies($currentCookieBoss);
+        $currentCookieBoss = CookieBoss::getInstance()->consent->generateCookieData(Craft::$app->getRequest()->getRequiredParam('groups'));
+        CookieBoss::getInstance()->consent->saveConsentCookies($currentCookieBoss);
 
         return json_encode($currentCookieBoss);
     }

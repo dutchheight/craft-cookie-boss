@@ -14,12 +14,12 @@ class ConsentService extends Component {
      *
      * @return Boolean
      */
-    public static function isConsentWith($handle, $concentIfNotSet = false) {
-        if (!ConsentService::hasConsentCookie()) {
+    public function isConsentWith($handle, $concentIfNotSet = false) {
+        if (!$this->hasConsentCookie()) {
             return false;
         }
 
-        $cookies = ConsentService::getConsentCookies();
+        $cookies = $this->getConsentCookies();
         $settings = json_decode($cookies->value, true);
         if (!key_exists($handle, $settings)) {
             return $concentIfNotSet;
@@ -31,7 +31,7 @@ class ConsentService extends Component {
      *
      * @return Boolean
      */
-    public static function hasConsentCookie() {
+    public function hasConsentCookie() {
         return Craft::$app->getRequest()->getCookies()->has('cookie-boss');
     }
 
@@ -39,12 +39,12 @@ class ConsentService extends Component {
      *
      * @return Array
      */
-    public static function getConsentCookies() {
+    public function getConsentCookies() {
         return Craft::$app->getRequest()->getCookies()->get('cookie-boss');
     }
 
-    public static function generateCookieData($groups) {
-        $originalData = ConsentGroupService::getAllEnabled();
+    public function generateCookieData($groups) {
+        $originalData = CookieBoss::getInstance()->consentGroups->getAllEnabled();
         $currentCookieBoss = [];
 
         foreach ($originalData as $consentsGroups) {
@@ -70,7 +70,7 @@ class ConsentService extends Component {
      * @var Array ['handle' => 'boolean']
      * @return Void
      */
-    public static function saveConsentCookies($data) {
+    public function saveConsentCookies($data) {
         $cookies = Craft::$app->response->cookies;
         $cookies->remove('cookie-boss');
         $cookies->add(new Cookie([
