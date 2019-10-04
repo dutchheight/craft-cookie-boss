@@ -105,6 +105,7 @@ class SettingsController extends Controller
         $settings['cookieTime']         = Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') * 86400;
         $settings['title']              = Craft::$app->getRequest()->getRequiredBodyParam('title');
         $settings['message']            = Craft::$app->getRequest()->getRequiredBodyParam('message');
+        $settings['messageSettings']            = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
         $settings['acceptButtonText']   = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonText');
         $settings['settingsButtonText'] = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
         $settings['cookiesPageId']      = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');

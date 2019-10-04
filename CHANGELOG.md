@@ -43,3 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Consent group handle generator bug
 - Cookie description handle generator bug
+
+## 1.1.1 - 2019-10-04
+### Fixed
+- Message settings didn't save properly
