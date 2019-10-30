@@ -2,7 +2,7 @@
 
 # Craft Cookie boss plugin for Craft CMS 3.x
 Allow your visitors to set their cookie preference which you can use to enable features in your site.
-Create your own cookie groups, make them required and/or set there default state.
+Create your own cookie groups, make them required and/or set their default state.
 These cookie groups can contain cookies with information which you can display to describe the purpose of each cookie.
 
 ![Create own cookie groups](resources/img/consent-groups.png)
