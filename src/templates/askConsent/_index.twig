@@ -16,6 +16,7 @@
         window.csrfParam = "{{ craft.app.request.csrfParam }}"
         window.csrfToken = "{{ craft.app.request.csrfToken }}"
         window.cookieBossHideAfter = "{{ settings.acceptAfterSeconds }}"
+        window.addTrailingSlashesToUrls = ('{{ craft.config.addTrailingSlashesToUrls | json_encode }}' == 'true')
     </script>
 
     <div id="cookie-boss" v-if="show">

@@ -1,4 +1,5 @@
-<form id="toggle-{{ handle }}-form" action="/cookie-boss/toggle-consent-group" method="POST">
+{% set url =  "/cookie-boss/toggle-consent-group" ~ (craft.config.addTrailingSlashesToUrls ? '/' : '') %}
+<form id="toggle-{{ handle }}-form" action="{{ url }}" method="POST">
     {{ csrfInput() }}
     {{ redirectInput(craft.app.request.pathInfo) }}
     <input type="hidden" name="groups[{{ handle }}]" value="" />

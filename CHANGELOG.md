@@ -47,3 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.1.1 - 2019-10-04
 ### Fixed
 - Message settings didn't save properly
+
+## 1.2.0 - 2019-11-14
+### Added
+- Implemented 'addTrailingSlashesToUrls' for form submitions

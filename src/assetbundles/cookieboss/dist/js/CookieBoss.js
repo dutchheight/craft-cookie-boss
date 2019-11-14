@@ -75,7 +75,8 @@ var CookieBoss = new Vue({
                 [window.csrfParam]: window.csrfToken
             };
 
-            axios({ method: 'POST', url: '/cookie-boss/save-consent-settings', data: data}).then((data) => {
+            url = '/cookie-boss/save-consent-settings' + ((window.addTrailingSlashesToUrls) ? '/' : '');
+            axios({ method: 'POST', url: url, data: data}).then((data) => {
                 window.location.reload();
             });
         },
