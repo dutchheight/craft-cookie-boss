@@ -1,6 +1,6 @@
 {
     "name": "dutchheight/craft-cookie-boss",
-    "description": "Allow your visitors to set there cookie preference.",
+    "description": "Allow your visitors to set their cookie preference.",
     "type": "craft-plugin",
     "version": "1.1.2",
     "keywords": [

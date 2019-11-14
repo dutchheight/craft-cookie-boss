@@ -1,9 +1,9 @@
 ![Screenshot](resources/img/plugin-logo.png)
 
 # Craft Cookie boss plugin for Craft CMS 3.x
-Allow your visitors to set there cookie preference which you can use to enable features in your site.
-Create your own cookie groups, make them required and/or set there default state.
-These cookie groups can contain cookies with information which you can display to describe the purpos of each cookie.
+Allow your visitors to set their cookie preference which you can use to enable features in your site.
+Create your own cookie groups, make them required and/or set their default state.
+These cookie groups can contain cookies with information which you can display to describe the purpose of each cookie.
 
 ![Create own cookie groups](resources/img/consent-groups.png)
 ![Add cookies to cookie groups](resources/img/cookie-descriptions.png)
@@ -40,7 +40,7 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require https://github.com/dutchheight/craft-cookie-boss
+        composer require dutchheight/craft-cookie-boss
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Craft Cookie boss.
 
@@ -70,8 +70,8 @@ Display the modal always:
 
 ### Display cookie descriptions
 Display a table with all enabled cookies. The table has `#cookie-descriptions` as id.
-Eache cookie is provided with the class `.consent-true` or `.consent-false` depending on the consentgroup's consent.
-All cookies are grouped by there group which has the class `.cookie-descriptions-group-title`. If you like more control you can use `craft.cookieBoss.getCookiesRaw()`.
+Each cookie is provided with the class `.consent-true` or `.consent-false` depending on the consentgroup's consent.
+All cookies are grouped by their group which has the class `.cookie-descriptions-group-title`. If you like more control you can use `craft.cookieBoss.getCookiesRaw()`.
 
 #### Examples
 Display a table with all enabled cookies
@@ -81,7 +81,7 @@ Display a table with all enabled cookies
 ---
 
 ### Display cookie group toggle checkbox
-Display's a checkbox which toggles the specified consent group. For more control see 'Toggle consent group with a form'
+Displays a checkbox which toggles the specified consent group. For more control see 'Toggle consent group with a form'
 
 | Attribute | Type | Required | Description |
 |:----------|:-----|:---------|:------------|
@@ -95,7 +95,7 @@ Display a checkbox which can be used to toggle a consent group
 ---
 
 ### Get all visitor consents
-`craft.cookieBoss.getConsents(defaultConcentIfNotSet)` is used to get an array with the visitors consents.
+`craft.cookieBoss.getConsents(defaultConcentIfNotSet)` is used to get an array with the visitor's consents.
 
 | Attribute | Type | Required | Description |
 |:----------|:-----|:---------|:------------|
@@ -121,7 +121,7 @@ Get all consents of the current visitor. Get default values if noting found.
 Get consents of the current visitor
 ```
 {% if craft.cookieBoss.isConsentWith('marketing') %}
-    We have permission to do marketing stuf
+    We have permission to do marketing stuff
 {% endif %}
 ```
 ---
@@ -193,7 +193,7 @@ Usage of the Craft csrf token is required. Use `craft.app.request.csrfParam` to 
 
 ### Toggle a consent group with a custom form
 Do a `POST` request to `/cookie-boss/toggle-consent-group`.
-For each group you like to toggle you need to pass a boolean represented by the handle name.
+For each group you wish to toggle you need to pass a boolean represented by the handle name.
 
 #### Example form
 ```
