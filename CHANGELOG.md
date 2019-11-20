@@ -48,6 +48,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Message settings didn't save properly
 
-## 1.2.0 - 2019-11-14
+## 1.1.2 - 2019-11-14
 ### Added
 - Implemented 'addTrailingSlashesToUrls' for form submitions
+
+## 1.1.3 - 2019-11-20
+### Fixed
+- Fixed deprecated warning 'craft.config.setting'
