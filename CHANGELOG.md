@@ -63,3 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Edit
 - Refactoring
+
+## 1.2.1 - 2020-02-26
+### Fixed
+- Fixed documentation link in plugin overview.
