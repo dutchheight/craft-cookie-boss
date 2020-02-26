@@ -108,6 +108,13 @@ class Settings extends Model
     */
     public $acceptAfterSeconds = 0;
 
+    /**
+    * Last cookie settings update (Unix timestamp)
+    *
+    * @var int
+    */
+    public $lastSettingsUpdate = null;
+
     // Public Methods
     // =========================================================================
 

@@ -4,9 +4,9 @@ namespace dutchheight\cookieboss\services;
 
 use Craft;
 use craft\base\Component;
-use yii\web\Cookie;
-
 use dutchheight\cookieboss\CookieBoss;
+
+use yii\web\Cookie;
 
 class ConsentService extends Component {
 
@@ -28,11 +28,33 @@ class ConsentService extends Component {
     }
 
     /**
-     *
+     * Check for valid consent cookies and consent given at time
      * @return Boolean
      */
     public function hasConsentCookie() {
-        return Craft::$app->getRequest()->getCookies()->has('cookie-boss');
+
+        if (!Craft::$app->getRequest()->getCookies()->has('cookie-boss') || !Craft::$app->getRequest()->getCookies()->has('cookie-boss-consent-at')) {
+            return false;
+        }
+
+        if ((int)CookieBoss::$settings->lastSettingsUpdate > (int)Craft::$app->getRequest()->getCookies()->get('cookie-boss-consent-at')->value) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check for valid consent cookies and consent given at time
+     * @return int|null
+     */
+    public function getConsentGivenAt() {
+
+        if (Craft::$app->getRequest()->getCookies()->has('cookie-boss-consent-at')) {
+            return (int)Craft::$app->getRequest()->getCookies()->get('cookie-boss-consent-at')->value;
+        }
+
+        return null;
     }
 
     /**
@@ -73,9 +95,18 @@ class ConsentService extends Component {
     public function saveConsentCookies($data) {
         $cookies = Craft::$app->response->cookies;
         $cookies->remove('cookie-boss');
+        $cookies->remove('cookie-boss-consent-at');
+
         $cookies->add(new Cookie([
             'name' => 'cookie-boss',
             'value' => json_encode($data),
+            'expire' => time() + CookieBoss::$settings->cookieTime
+        ]));
+
+        // Set current time
+        $cookies->add(new Cookie([
+            'name' => 'cookie-boss-consent-at',
+            'value' => json_encode(time()),
             'expire' => time() + CookieBoss::$settings->cookieTime
         ]));
     }

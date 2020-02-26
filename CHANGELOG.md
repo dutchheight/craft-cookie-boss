@@ -1,4 +1,4 @@
-# Craft Cookie boss Changelog
+# Release Notes for Craft Cookie boss
 
 All notable changes to this project will be documented in this file.
 
@@ -55,3 +55,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.1.3 - 2019-11-20
 ### Fixed
 - Fixed deprecated warning 'craft.config.setting'
+
+## 1.2.0 - 2020-02-26
+### Added
+- Added support for consent invalidation.
+- Dutch translations
+
+### Edit
+- Refactoring

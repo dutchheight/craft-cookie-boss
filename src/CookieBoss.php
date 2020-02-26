@@ -10,19 +10,17 @@
 
 namespace dutchheight\cookieboss;
 
-use yii\base\Event;
-
 use Craft;
 use craft\base\Plugin;
-use craft\helpers\UrlHelper;
-use craft\web\UrlManager;
 use craft\events\RegisterUrlRulesEvent;
+use craft\helpers\UrlHelper;
 use craft\web\twig\variables\CraftVariable;
-
+use craft\web\UrlManager;
+use dutchheight\cookieboss\models\Settings;
 use dutchheight\cookieboss\services\ConsentGroupService;
 use dutchheight\cookieboss\services\CookieDescriptionService;
 use dutchheight\cookieboss\variables\CookieBossVariable;
-use dutchheight\cookieboss\models\Settings;
+use yii\base\Event;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made

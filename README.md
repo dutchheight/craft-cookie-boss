@@ -5,6 +5,7 @@ Allow your visitors to set their cookie preference which you can use to enable f
 Create your own cookie groups, make them required and/or set their default state.
 These cookie groups can contain cookies with information which you can display to describe the purpose of each cookie.
 
+
 ![Create own cookie groups](resources/img/consent-groups.png)
 ![Add cookies to cookie groups](resources/img/cookie-descriptions.png)
 
@@ -107,6 +108,22 @@ Get all consents of the current visitor
 
 Get all consents of the current visitor. Get default values if noting found.
 ```craft.cookieBoss.getConsents(true)```
+
+---
+
+### Get visitor consent date
+`craft.cookieBoss.getConsentGiveAt(format)` is used to get the unix time or formated date of the visitor's consents.
+
+| Attribute | Type | Required | Description |
+|:----------|:-----|:---------|:------------|
+|format|string|false|Format the timestamp|
+
+#### Examples
+Get the current visitor time of consent.
+``craft.cookieBoss.getConsentGiveAt()``
+
+Get the current visitor time of consent in given format.
+```craft.cookieBoss.getConsentGiveAt("d-m-Y")```
 
 ---
 

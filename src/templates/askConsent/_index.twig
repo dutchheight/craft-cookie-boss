@@ -1,11 +1,6 @@
 {% if settings.enabled %}
-    {% if craft.app.config.general.devMode %}
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    {% else %}
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     {% do view.registerAssetBundle("dutchheight\\cookieboss\\assetbundles\\cookieboss\\CookieBossAsset") %}
     {% set baseAssetsUrl = view.getAssetManager().getPublishedUrl('@dutchheight/cookieboss/assetbundles/cookieboss/dist', true) %}

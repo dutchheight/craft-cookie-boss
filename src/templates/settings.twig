@@ -20,6 +20,26 @@
 
 {% set title = 'Cookie Boss Settings'|t('cookie-boss') %}
 
+{% block actionButton %}
+    <div id="save-btn-container" class="btngroup submit">
+        {{ tag('input', {
+            type: 'submit',
+            class: ['btn', 'submit'],
+            value: 'Save'|t('app'),
+        }) }}
+        <div class="btn submit menubtn"></div>
+        <div class="menu" data-align="right">
+            <ul>
+                <li>
+                    <a class="formsubmit" data-name="submit-reset" data-param="reset-consent" data-value="true" data-action="cookie-boss/settings/save-general">
+                        {{ 'Save and invalidate consent'|t('cookie-boss') }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
     <input type="hidden" name="action" value="cookie-boss/settings/save-general">
     {{ csrfInput() }}
@@ -27,15 +47,15 @@
     <div id="list-general">
 
         {{ forms.lightswitchField({
-            label: 'Enabled',
-            instructions: 'Enable the plugin.' |t('cookie-boss'),
+            label: 'Enabled' |t('app'),
+            instructions: 'Enable Cookie Boss.' |t('cookie-boss'),
             id: 'enabled',
             name: 'enabled',
             on: settings['enabled']})
         }}
 
         {{ forms.lightswitchField({
-            label: 'Give choices immediately',
+            label: 'Give choices immediately' |t('cookie-boss'),
             instructions: 'Give choices immediately, turn off if u want "using is accepting". Keep in mind you can present the settings on a different page.' |t('cookie-boss'),
             id: 'presentGroups',
             name: 'presentGroups',
@@ -43,7 +63,7 @@
         }}
 
         {{ forms.lightswitchField({
-            label: 'Force accept',
+            label: 'Force accept' |t('cookie-boss'),
             instructions: 'Prevent using the page until a consent is given.' |t('cookie-boss'),
             id: 'forceAccept',
             name: 'forceAccept',
@@ -51,8 +71,8 @@
         }}
 
         {{ forms.elementSelectField({
-            label: 'Cookie page',
-            instructions: 'Set cookie page.' |t('cookie-boss'),
+            label: 'Cookie page' |t('cookie-boss'),
+            instructions: 'Set cookie info page.' |t('cookie-boss'),
             id: 'contactPage',
             name: 'contactPage',
             elementType: '\\craft\\elements\\Entry',
@@ -74,7 +94,7 @@
 
     <div id="list-popup" class="hidden">
         {{ forms.textField({
-            label: 'Title' |t('cookie-boss'),
+            label: 'Title' |t('app'),
             instructions: 'The title of the consent popup.' |t('cookie-boss'),
             id: 'title',
             name: 'title',
@@ -82,7 +102,7 @@
         }) }}
 
         {{ forms.textareaField({
-            label: 'Message' |t('cookie-boss'),
+            label: 'Message' |t('app'),
             instructions: 'The message of the consent popup.' |t('cookie-boss'),
             id: 'message',
             name: 'message',
@@ -129,7 +149,7 @@
             id: 'consentGroups',
             label: 'Consent groups' |t('cookie-boss'),
             required: true,
-            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('cookie-boss'),
+            instructions: 'A consent group is a group of cookies for a specific purpose.' |t('cookie-boss'),
             name: 'consentGroups',
             rows: consentGroups,
             cols: {
@@ -138,18 +158,17 @@
                     class: 'hidden'
                 },
                 enabled: {
-                    heading: 'Enabled' |t('cookie-boss'),
+                    heading: 'Enabled' |t('app'),
                     type: 'lightswitch',
-                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('cookie-boss'),
                 },
                 name: {
                     id: 'name',
-                    heading: 'Name' |t('cookie-boss'),
+                    heading: 'Name' |t('app'),
                     type: 'singleline',
                     info: 'The name of this consent group.' |t('cookie-boss'),
                 },
                 handle: {
-                    heading: 'Handle',
+                    heading: 'Handle' |t('app'),
                     type: 'singleline',
                     class: 'code',
                     autocorrect: false,
@@ -157,7 +176,7 @@
                     info: 'Handle to use in twig.' |t('cookie-boss'),
                 },
                 desc: {
-                    heading: 'Description' |t('cookie-boss'),
+                    heading: 'Description' |t('app'),
                     type: 'text',
                     info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
                 },
@@ -180,7 +199,7 @@
             id: 'cookies',
             label: 'Cookies' |t('cookie-boss'),
             required: true,
-            instructions: 'A consent group is a group of cookies for a specific purpose. Which consent groups do you like to include is this site.' |t('cookie-boss'),
+            instructions: 'All cookies used on this site.' |t('cookie-boss'),
             name: 'cookies',
             rows: cookies,
             cols: {
@@ -189,24 +208,22 @@
                     class: 'hidden'
                 },
                 enabled: {
-                    heading: 'Enabled' |t('cookie-boss'),
+                    heading: 'Enabled' |t('app'),
                     type: 'lightswitch',
-                    info: 'Set this to true if the visitor should not be allowed to refuse cookies in this group' |t('cookie-boss'),
                 },
                 consentGroupId: {
                     heading: 'Consent group' |t('cookie-boss'),
                     type: 'select',
                     options: consentGroupsSelectOptions,
-                    info: 'Set the consent group.' |t('cookie-boss'),
+                    info: 'Define the consent group.' |t('cookie-boss'),
                 },
                 name: {
                     id: 'name',
-                    heading: 'Name' |t('cookie-boss'),
+                    heading: 'Name' |t('app'),
                     type: 'singleline',
-                    info: 'The name of this consent group.' |t('cookie-boss'),
                 },
                 key: {
-                    heading: 'key',
+                    heading: 'key' |t('app'),
                     type: 'singleline',
                     class: 'code',
                     autocorrect: false,
@@ -216,12 +233,12 @@
                 purpose: {
                     heading: 'Purpose' |t('cookie-boss'),
                     type: 'text',
-                    info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
+                    info: 'The purpose of this cookie. This description is visable for your visitors.' |t('cookie-boss'),
                 },
                 desc: {
-                    heading: 'Description' |t('cookie-boss'),
+                    heading: 'Description' |t('app'),
                     type: 'text',
-                    info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
+                    info: 'The description of this cookie. This description is visable for your visitors.' |t('cookie-boss'),
                 }
             },
         }) }}

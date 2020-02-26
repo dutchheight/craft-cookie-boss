@@ -10,11 +10,11 @@
 
 namespace dutchheight\cookieboss\variables;
 
-use dutchheight\cookieboss\CookieBoss;
-
 use Craft;
-use craft\web\View;
+
 use craft\elements\Entry;
+use craft\web\View;
+use dutchheight\cookieboss\CookieBoss;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 /**
@@ -134,6 +134,19 @@ class CookieBossVariable
 
         $cookies = CookieBoss::getInstance()->consent->getConsentCookies();
         return json_decode($cookies->value, true);
+    }
+
+    /**
+     *
+     * @return int|null
+     */
+    public function getConsentGiveAt($format = null)
+    {
+        $time = CookieBoss::getInstance()->consent->getConsentGivenAt();
+        if ($format) {
+            return date($format, $time);
+        }
+        return $time;
     }
 
     //

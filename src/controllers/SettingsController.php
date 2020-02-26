@@ -2,14 +2,14 @@
 
 namespace dutchheight\cookieboss\controllers;
 
-use dutchheight\cookieboss\CookieBoss;
-
 use Craft;
-use craft\web\Controller;
-use craft\helpers\UrlHelper;
+
 use craft\elements\Entry;
-use yii\web\Response;
+use craft\helpers\UrlHelper;
+use craft\web\Controller;
+use dutchheight\cookieboss\CookieBoss;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 
 /**
@@ -82,9 +82,16 @@ class SettingsController extends Controller
             throw new NotFoundHttpException(Craft::t('app', 'Plugin not found.'));
         }
 
+        $forceReconsent = (bool)Craft::$app->getRequest()->getBodyParam('reset-consent');
+        return $this->saveSettings($forceReconsent);
+    }
+
+    private function saveSettings($forceReconsent = false) {
+        $plugin         = Craft::$app->getPlugins()->getPlugin('cookie-boss');
         $cookies        = Craft::$app->getRequest()->getRequiredBodyParam('cookies');
         $cookies        = empty($cookies) ? [] : $cookies;
-        $update = CookieBoss::getInstance()->cookieDescriptions->updateAll($cookies);
+        $update         = CookieBoss::getInstance()->cookieDescriptions->updateAll($cookies);
+
         if (is_array($update)) {
             $this->error($plugin);
             return null;
@@ -98,18 +105,22 @@ class SettingsController extends Controller
             return null;
         }
 
-        $settings['enabled']            = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
-        $settings['presentGroups']       = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
-        $settings['forceAccept']        = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
+        $settings['enabled']                = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
+        $settings['presentGroups']          = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
+        $settings['forceAccept']            = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
 
-        $settings['cookieTime']         = Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') * 86400;
-        $settings['title']              = Craft::$app->getRequest()->getRequiredBodyParam('title');
-        $settings['message']            = Craft::$app->getRequest()->getRequiredBodyParam('message');
-        $settings['messageSettings']    = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
-        $settings['acceptButtonText']   = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonText');
-        $settings['settingsButtonText'] = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
-        $settings['cookiesPageId']      = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');
-        $settings['acceptAfterSeconds'] = Craft::$app->getRequest()->getRequiredBodyParam('acceptAfterSeconds');
+        $settings['cookieTime']             = Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') * 86400;
+        $settings['title']                  = Craft::$app->getRequest()->getRequiredBodyParam('title');
+        $settings['message']                = Craft::$app->getRequest()->getRequiredBodyParam('message');
+        $settings['messageSettings']        = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
+        $settings['acceptButtonText']       = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonText');
+        $settings['settingsButtonText']     = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
+        $settings['cookiesPageId']          = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');
+        $settings['acceptAfterSeconds']     = Craft::$app->getRequest()->getRequiredBodyParam('acceptAfterSeconds');
+
+        if ($forceReconsent) {
+            $settings['lastSettingsUpdate'] = time();
+        }
 
         $success = Craft::$app->getPlugins()->savePluginSettings($plugin, $settings);
         if (!$success) {
