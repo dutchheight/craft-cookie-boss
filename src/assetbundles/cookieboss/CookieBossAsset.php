@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2019 Dutch Height
  */
 
-namespace dutchheight\cookieboss\assetbundles\CookieBoss;
+namespace dutchheight\cookieboss\assetbundles\cookieBoss;
 
 use Craft;
 use craft\web\AssetBundle;

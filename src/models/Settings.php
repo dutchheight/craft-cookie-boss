@@ -115,6 +115,13 @@ class Settings extends Model
     */
     public $lastSettingsUpdate = null;
 
+    /**
+    * The position (css class) of the modal
+    *
+    * @var string
+    */
+    public $position = "bottom-right";
+
     // Public Methods
     // =========================================================================
 

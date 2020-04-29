@@ -142,6 +142,22 @@
             min: 0,
             value: settings['acceptAfterSeconds']
         }) }}
+
+        {{ forms.selectField({
+            label: 'Position' |t('cookie-boss'),
+            instructions: 'Set the popup position.' |t('cookie-boss'),
+            id: 'position',
+            name: 'position',
+            options: {
+                "top-left": "Top left" |t('cookie-boss'),
+                "top-right": "Top right" |t('cookie-boss'),
+                "bottom-left": "Bottom left" |t('cookie-boss'),
+                "bottom-right": "Bottom right" |t('cookie-boss'),
+                "bottom-center": "Bottom center" |t('cookie-boss'),
+                "center": "Center" |t('cookie-boss'),
+            },
+            value: settings['position']
+        }) }}
     </div>
 
     <div id="list-consent-groups" class="hidden">

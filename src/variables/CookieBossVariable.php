@@ -193,7 +193,7 @@ class CookieBossVariable
 
     private function getDefaultTemplateSettings() {
         return [
-            'position' => 'bottom-right'
+            'position' => CookieBoss::$settings["position"]
         ];
     }
 }

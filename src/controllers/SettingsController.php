@@ -43,6 +43,7 @@ class SettingsController extends Controller
         $variables['cookies'] = CookieBoss::getInstance()->cookieDescriptions->getAll();
 
         $variables['settings'] = $settings;
+        // Craft::dump($settings);
         $variables['tabs'] = [
             'general' => [
                 'label' => Craft::t('app', 'General'),
@@ -117,6 +118,7 @@ class SettingsController extends Controller
         $settings['settingsButtonText']     = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
         $settings['cookiesPageId']          = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');
         $settings['acceptAfterSeconds']     = Craft::$app->getRequest()->getRequiredBodyParam('acceptAfterSeconds');
+        $settings['position']               = Craft::$app->getRequest()->getRequiredBodyParam('position');
 
         if ($forceReconsent) {
             $settings['lastSettingsUpdate'] = time();

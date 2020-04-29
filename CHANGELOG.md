@@ -67,3 +67,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.2.1 - 2020-02-26
 ### Fixed
 - Fixed documentation link in plugin overview.
+
+## 1.3.0 - 2020-04-29
+### Added
+- Modal position setting.
+
+### Fixed
+- Fixed namespace.
