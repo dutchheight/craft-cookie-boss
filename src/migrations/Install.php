@@ -216,7 +216,7 @@ class Install extends Migration
             'consentGroupId' => 1,
             'name' => 'Cookie message',
             'key' => 'craft-cookie-boss',
-            'desc' => 'This info isn\'t shared with third partys. And will be removed after7 days.',
+            'desc' => 'This info isn\'t shared with third parties and will be removed after 7 days.',
             'purpose' => 'We use this to save your cookie preferences and if you have seen the cookie modal.',
             'enabled' => 1
         ], true);

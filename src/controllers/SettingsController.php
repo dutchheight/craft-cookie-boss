@@ -8,14 +8,15 @@ use craft\elements\Entry;
 use craft\helpers\UrlHelper;
 use craft\web\Controller;
 use dutchheight\cookieboss\CookieBoss;
+use Exception;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 
 /**
- * @author    Dutch Height
- * @package   CookieBoss
- * @since     1.0.0
+ * @package CookieBoss
+ * @author  Dutch Height <info@dutchheight.com>
+ * @since   1.0.0
  */
 class SettingsController extends Controller
 {
@@ -43,7 +44,6 @@ class SettingsController extends Controller
         $variables['cookies'] = CookieBoss::getInstance()->cookieDescriptions->getAll();
 
         $variables['settings'] = $settings;
-        // Craft::dump($settings);
         $variables['tabs'] = [
             'general' => [
                 'label' => Craft::t('app', 'General'),
@@ -84,25 +84,41 @@ class SettingsController extends Controller
         }
 
         $forceReconsent = (bool)Craft::$app->getRequest()->getBodyParam('reset-consent');
-        return $this->saveSettings($forceReconsent);
+        return $this->_saveSettings($forceReconsent);
     }
 
-    private function saveSettings($forceReconsent = false) {
-        $plugin         = Craft::$app->getPlugins()->getPlugin('cookie-boss');
-        $cookies        = Craft::$app->getRequest()->getRequiredBodyParam('cookies');
-        $cookies        = empty($cookies) ? [] : $cookies;
-        $update         = CookieBoss::getInstance()->cookieDescriptions->updateAll($cookies);
+    /**
+     * Save plugin settings
+     *
+     * @param boolean $forceReconsent Show the plugin new consenses?
+     *
+     * @return void
+     */
+    private function _saveSettings($forceReconsent = false)
+    {
+        $plugin     = Craft::$app->getPlugins()->getPlugin('cookie-boss');
+        $cookies    = Craft::$app->getRequest()->getRequiredBodyParam('cookies');
+        $cookies    = empty($cookies) ? [] : $cookies;
+        $update     = CookieBoss::getInstance()->cookieDescriptions->updateAll($cookies);
 
         if (is_array($update)) {
-            $this->error($plugin);
+            $this->_error();
             return null;
         }
 
         $consentGroups  = Craft::$app->getRequest()->getRequiredBodyParam('consentGroups');
         $consentGroups  = empty($consentGroups) ? [] : $consentGroups;
-        $update = CookieBoss::getInstance()->consentGroups->updateAll($consentGroups);
+        try {
+            $update = CookieBoss::getInstance()
+                ->consentGroups
+                ->updateAll($consentGroups);
+        } catch(Exception $e) {
+            $this->_error();
+            return $this->redirectToPostedUrl();
+        }
+
         if (is_array($update)) {
-            $this->error($plugin);
+            $this->_error();
             return null;
         }
 
@@ -110,7 +126,7 @@ class SettingsController extends Controller
         $settings['presentGroups']          = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
         $settings['forceAccept']            = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
 
-        $settings['cookieTime']             = Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') * 86400;
+        $settings['cookieTime']             = (Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') || 1) * 86400;
         $settings['title']                  = Craft::$app->getRequest()->getRequiredBodyParam('title');
         $settings['message']                = Craft::$app->getRequest()->getRequiredBodyParam('message');
         $settings['messageSettings']        = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
@@ -126,7 +142,7 @@ class SettingsController extends Controller
 
         $success = Craft::$app->getPlugins()->savePluginSettings($plugin, $settings);
         if (!$success) {
-            $this->error($plugin);
+            $this->_error();
             return null;
         }
 
@@ -134,11 +150,17 @@ class SettingsController extends Controller
         return $this->redirectToPostedUrl();
     }
 
-    private function error($plugin) {
+    /**
+     * Show Craft CMS error
+     *
+     * @return void
+     */
+    private function _error()
+    {
         Craft::$app->getSession()->setError(Craft::t('app', "Couldn't save plugin settings."));
         // Send the plugin back to the template
         Craft::$app->getUrlManager()->setRouteParams([
-            'plugin' => $plugin,
+            'plugin' => Craft::$app->getPlugins()->getPlugin('cookie-boss'),
         ]);
     }
 }

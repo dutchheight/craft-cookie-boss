@@ -74,3 +74,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 - Fixed namespace.
+
+## 1.3.1 - 2020-08-21
+### Added
+- Ordering to consent group [#12](https://github.com/dutchheight/craft-cookie-boss/issues/12).
+
+### Fixed
+- Added validation [#11](https://github.com/dutchheight/craft-cookie-boss/issues/11).
+- Changed consent group description to text columt [#9](https://github.com/dutchheight/craft-cookie-boss/issues/9).
+- Spelling mistake [#10](https://github.com/dutchheight/craft-cookie-boss/issues/10).

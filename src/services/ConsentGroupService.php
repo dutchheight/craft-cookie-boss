@@ -10,6 +10,7 @@ use craft\helpers\Db;
 use craft\helpers\StringHelper;
 
 use dutchheight\cookieboss\records\ConsentGroup;
+use yii\base\Exception;
 
 class ConsentGroupService extends Component {
 
@@ -17,7 +18,7 @@ class ConsentGroupService extends Component {
     const TABLE = '{{%cookieboss_consentgroup}}';
 
     public function getAll() {
-        return ConsentGroup::find()->orderBy('id')->all();
+        return ConsentGroup::find()->orderBy('order')->all();
     }
 
     public function getAllByHandle($handle) {
@@ -39,27 +40,41 @@ class ConsentGroupService extends Component {
         return $returner;
     }
 
-    public function getAllEnabled() {
-        return ConsentGroup::find()->where(['enabled' => 1])->orderBy('id')->all();
+    public function getAllEnabled()
+    {
+        return ConsentGroup::find()->where(['enabled' => 1])->orderBy('order')->all();
     }
 
-    public function deleteAll() {
+    public function deleteAll()
+    {
         return ConsentGroup::deleteAll();
     }
 
-    public function selectId($el) {
+    public function selectId($el)
+    {
         if ($el['id']) {
             return (int)$el['id'];
         }
     }
 
-    public function updateAll(Array $groups) {
+    /**
+     * Update all consent groups
+     *
+     * @param Array $groups consent group array
+     *
+     * @return void
+     *
+     * @throws Exception validation exception
+     */
+    public function updateAll(Array $groups)
+    {
         // All id's that are left over should be deleted
         $currentIds = array_map(
             'self::selectId',
             ConsentGroup::find()->select(['id'])->asArray()->all()
         );
 
+        $order = 1;
         foreach ($groups as $group) {
             // Check if cg is new
             if ($group['id']) {
@@ -80,6 +95,7 @@ class ConsentGroupService extends Component {
             }
 
             // Update props
+            $cg->order        = $order;
             $cg->enabled      = (!empty($group["enabled"]) ? $group["enabled"] : 0);
             $cg->defaultValue = (!empty($group["defaultValue"]) ? $group["defaultValue"] : 0);
             $cg->required     = (!empty($group["required"]) ? $group["required"] : 0);
@@ -87,8 +103,13 @@ class ConsentGroupService extends Component {
             $cg->name         = $group["name"];
             $cg->desc         = $group["desc"];
 
+            if (!ConsentGroup::validateMultiple([$cg])) {
+                throw new Exception("Validation exception");
+            }
+
             // Save to config
             $this->saveConsentGroup($cg);
+            $order ++;
         }
 
         if (count($currentIds) > 0) {
@@ -109,6 +130,7 @@ class ConsentGroupService extends Component {
 
         // Save it to the project config
         Craft::$app->projectConfig->set(self::CONFIG_KEY . "." .$consentGroup->uid, [
+            'order'        => $consentGroup->order,
             'enabled'      => $consentGroup->enabled,
             'defaultValue' => $consentGroup->defaultValue,
             'required'     => $consentGroup->required,
@@ -148,6 +170,7 @@ class ConsentGroupService extends Component {
         } else {
             Craft::$app->db->createCommand()->update(self::TABLE, [
                     'uid'          => $uid,
+                    'order'        => $event->newValue['order'],
                     'enabled'      => $event->newValue['enabled'],
                     'defaultValue' => $event->newValue['defaultValue'],
                     'required'     => $event->newValue['required'],

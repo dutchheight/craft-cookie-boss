@@ -179,12 +179,12 @@
                 },
                 name: {
                     id: 'name',
-                    heading: 'Name' |t('app'),
+                    heading: 'Name' |t('app') ~ "*",
                     type: 'singleline',
                     info: 'The name of this consent group.' |t('cookie-boss'),
                 },
                 handle: {
-                    heading: 'Handle' |t('app'),
+                    heading: 'Handle' |t('app') ~ "*",
                     type: 'singleline',
                     class: 'code',
                     autocorrect: false,
@@ -192,8 +192,9 @@
                     info: 'Handle to use in twig.' |t('cookie-boss'),
                 },
                 desc: {
-                    heading: 'Description' |t('app'),
+                    heading: 'Description' |t('app') ~ "*",
                     type: 'text',
+                    required: true,
                     info: 'The description of this group. This description is visable for your visitors.' |t('cookie-boss'),
                 },
                 defaultValue: {
