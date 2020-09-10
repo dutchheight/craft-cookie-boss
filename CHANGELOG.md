@@ -83,3 +83,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Added validation [#11](https://github.com/dutchheight/craft-cookie-boss/issues/11).
 - Changed consent group description to text columt [#9](https://github.com/dutchheight/craft-cookie-boss/issues/9).
 - Spelling mistake [#10](https://github.com/dutchheight/craft-cookie-boss/issues/10).
+
+## 1.3.2 - 2020-09-10
+### Fixed
+- Migration error [#15](https://github.com/dutchheight/craft-cookie-boss/issues/15)

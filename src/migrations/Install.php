@@ -103,6 +103,7 @@ class Install extends Migration
                 '{{%cookieboss_consentgroup}}',
                 [
                     'id' => $this->primaryKey(),
+                    'order' => $this->integer()->null(),
                     'dateCreated' => $this->dateTime()->notNull(),
                     'dateUpdated' => $this->dateTime()->notNull(),
                     'uid' => $this->uid(),
@@ -110,7 +111,7 @@ class Install extends Migration
                     'siteId' => $this->integer(),
                     'handle' => $this->string(255)->notNull()->defaultValue(''),
                     'name' => $this->string(255)->notNull()->defaultValue(''),
-                    'desc' => $this->string(255)->notNull()->defaultValue(''),
+                    'desc' => $this->text()->notNull()->defaultValue(''),
                     'enabled' => $this->boolean()->notNull()->defaultValue(1),
                     'required' => $this->boolean()->notNull()->defaultValue(0),
                     'defaultValue' => $this->boolean()->notNull()->defaultValue(0),
