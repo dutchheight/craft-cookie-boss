@@ -15,7 +15,7 @@ class m200821_142415_edit_cookieboss_consentgroup_description extends Migration
      */
     public function safeUp()
     {
-        $this->alterColumn('{{%cookieboss_consentgroup}}', 'desc', $this->text()->notNull()->defaultValue(''));
+        $this->alterColumn('{{%cookieboss_consentgroup}}', 'desc', $this->text()->notNull());
     }
 
     /**

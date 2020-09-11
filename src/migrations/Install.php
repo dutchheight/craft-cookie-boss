@@ -111,7 +111,7 @@ class Install extends Migration
                     'siteId' => $this->integer(),
                     'handle' => $this->string(255)->notNull()->defaultValue(''),
                     'name' => $this->string(255)->notNull()->defaultValue(''),
-                    'desc' => $this->text()->notNull()->defaultValue(''),
+                    'desc' => $this->text()->notNull(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(1),
                     'required' => $this->boolean()->notNull()->defaultValue(0),
                     'defaultValue' => $this->boolean()->notNull()->defaultValue(0),
@@ -130,7 +130,7 @@ class Install extends Migration
                     'consentGroupId' => $this->integer(),
                     'name' => $this->string(255)->notNull()->defaultValue(''),
                     'key' => $this->string(255)->notNull()->defaultValue(''),
-                    'desc' => $this->string(255)->notNull()->defaultValue(''),
+                    'desc' => $this->text()->notNull(),
                     'purpose' => $this->string(255)->notNull()->defaultValue(''),
                     'enabled' => $this->boolean()->notNull()->defaultValue(1)
                 ]
