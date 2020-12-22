@@ -87,3 +87,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.3.2 - 2020-09-10
 ### Fixed
 - Migration error [#15](https://github.com/dutchheight/craft-cookie-boss/issues/15)
+
+## 1.3.3 - 2020-12-22
+### Fixed
+- Vue version [#18](https://github.com/dutchheight/craft-cookie-boss/issues/18)
+- Invalid after days bug [#16](https://github.com/dutchheight/craft-cookie-boss/issues/16)

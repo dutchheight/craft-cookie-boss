@@ -122,11 +122,16 @@ class SettingsController extends Controller
             return null;
         }
 
+        
+
         $settings['enabled']                = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
         $settings['presentGroups']          = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
         $settings['forceAccept']            = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
 
-        $settings['cookieTime']             = (Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') || 1) * 86400;
+        $cookieTime                         = (Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') != null) ? 
+            Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') : 1;
+        $settings['cookieTime']             = $cookieTime * 86400;
+        
         $settings['title']                  = Craft::$app->getRequest()->getRequiredBodyParam('title');
         $settings['message']                = Craft::$app->getRequest()->getRequiredBodyParam('message');
         $settings['messageSettings']        = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
