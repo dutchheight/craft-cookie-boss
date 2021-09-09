@@ -13,7 +13,9 @@ namespace dutchheight\cookieboss;
 use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterUrlRulesEvent;
+use craft\events\RegisterCpNavItemsEvent;
 use craft\helpers\UrlHelper;
+use craft\web\twig\variables\Cp;
 use craft\web\twig\variables\CraftVariable;
 use craft\web\UrlManager;
 use dutchheight\cookieboss\models\Settings;
@@ -106,6 +108,18 @@ class CookieBoss extends Plugin
             function (RegisterUrlRulesEvent $event) {
                 $event->rules['cookie-boss/save-consent-settings'] = 'cookie-boss/consent/save-consent-settings';
                 $event->rules['cookie-boss/toggle-consent-group'] = 'cookie-boss/consent/toggle-consent-group';
+            }
+        );
+
+        Event::on(
+            Cp::class,
+            Cp::EVENT_REGISTER_CP_NAV_ITEMS,
+            function(RegisterCpNavItemsEvent $event) {
+                $event->navItems[] = [
+                    'url' => 'cookie-boss/settings',
+                    'label' => 'Cookie Boss',
+                    'icon' => '@dutchheight/cookieboss/assetbundles/cookieboss/dist/img/CookieBoss-icon.svg',
+                ];
             }
         );
 

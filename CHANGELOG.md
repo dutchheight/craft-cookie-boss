@@ -92,3 +92,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Vue version [#18](https://github.com/dutchheight/craft-cookie-boss/issues/18)
 - Invalid after days bug [#16](https://github.com/dutchheight/craft-cookie-boss/issues/16)
+
+## 1.4.0 - 2021-09-09
+### Fixed
+- Added a dashboard menu item
