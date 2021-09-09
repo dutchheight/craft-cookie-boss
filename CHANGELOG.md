@@ -94,5 +94,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Invalid after days bug [#16](https://github.com/dutchheight/craft-cookie-boss/issues/16)
 
 ## 1.4.0 - 2021-09-09
-### Fixed
+### Added
 - Added a dashboard menu item
+
+## 1.4.1 - 2021-09-09
+### Added
+- Added permission
