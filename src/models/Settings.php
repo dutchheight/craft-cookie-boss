@@ -93,6 +93,13 @@ class Settings extends Model
     * @var string
     */
     public $acceptButtonText = "Accept";
+    
+    /**
+    * The accept button text of the settings
+    *
+    * @var string
+    */
+    public $acceptButtonSettingsText = "Accept";
 
     /**
     * The cookie detailpage id

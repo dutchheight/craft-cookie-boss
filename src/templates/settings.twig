@@ -124,6 +124,14 @@
                 name: 'acceptButtonText',
                 value: settings['acceptButtonText']
         }) }}
+        
+        {{ forms.textField({
+                label: 'Accept Button settings' |t('cookie-boss'),
+                instructions: 'The text of the accept button on the settings popup.' |t('cookie-boss'),
+                id: 'acceptButtonSettingsText',
+                name: 'acceptButtonSettingsText',
+                value: settings['acceptButtonSettingsText']
+        }) }}
 
         {{ forms.textField({
                 label: 'Settings Button' |t('cookie-boss'),

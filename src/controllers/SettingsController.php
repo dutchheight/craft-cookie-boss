@@ -124,22 +124,23 @@ class SettingsController extends Controller
 
         
 
-        $settings['enabled']                = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
-        $settings['presentGroups']          = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
-        $settings['forceAccept']            = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
+        $settings['enabled']                    = (Craft::$app->getRequest()->getRequiredBodyParam('enabled') == '1');
+        $settings['presentGroups']              = (Craft::$app->getRequest()->getRequiredBodyParam('presentGroups') == '1');
+        $settings['forceAccept']                = (Craft::$app->getRequest()->getRequiredBodyParam('forceAccept') == '1');
 
-        $cookieTime                         = (Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') != null) ? 
+        $cookieTime                             = (Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') != null) ? 
             Craft::$app->getRequest()->getRequiredBodyParam('cookieTime') : 1;
-        $settings['cookieTime']             = $cookieTime * 86400;
+        $settings['cookieTime']                 = $cookieTime * 86400;
         
-        $settings['title']                  = Craft::$app->getRequest()->getRequiredBodyParam('title');
-        $settings['message']                = Craft::$app->getRequest()->getRequiredBodyParam('message');
-        $settings['messageSettings']        = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
-        $settings['acceptButtonText']       = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonText');
-        $settings['settingsButtonText']     = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
-        $settings['cookiesPageId']          = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');
-        $settings['acceptAfterSeconds']     = Craft::$app->getRequest()->getRequiredBodyParam('acceptAfterSeconds');
-        $settings['position']               = Craft::$app->getRequest()->getRequiredBodyParam('position');
+        $settings['title']                      = Craft::$app->getRequest()->getRequiredBodyParam('title');
+        $settings['message']                    = Craft::$app->getRequest()->getRequiredBodyParam('message');
+        $settings['messageSettings']            = Craft::$app->getRequest()->getRequiredBodyParam('messageSettings');
+        $settings['acceptButtonText']           = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonText');
+        $settings['acceptButtonSettingsText']   = Craft::$app->getRequest()->getRequiredBodyParam('acceptButtonSettingsText');
+        $settings['settingsButtonText']         = Craft::$app->getRequest()->getRequiredBodyParam('settingsButtonText');
+        $settings['cookiesPageId']              = Craft::$app->getRequest()->getRequiredBodyParam('contactPage');
+        $settings['acceptAfterSeconds']         = Craft::$app->getRequest()->getRequiredBodyParam('acceptAfterSeconds');
+        $settings['position']                   = Craft::$app->getRequest()->getRequiredBodyParam('position');
 
         if ($forceReconsent) {
             $settings['lastSettingsUpdate'] = time();

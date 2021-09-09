@@ -100,3 +100,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.4.1 - 2021-09-09
 ### Added
 - Added permission
+
+## 1.4.2 - 2021-09-09
+### Added
+- Different button text (popup and popup settings) [#17](https://github.com/dutchheight/craft-cookie-boss/issues/17)
+
+### Edit
+- Dependencies
