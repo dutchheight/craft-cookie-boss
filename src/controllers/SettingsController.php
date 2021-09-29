@@ -42,7 +42,8 @@ class SettingsController extends Controller
         $variables['consentGroups'] = CookieBoss::getInstance()->consentGroups->getAll();
         $variables['consentGroupsSelectOptions'] = CookieBoss::getInstance()->consentGroups->getAllAsSelectOptions();
         $variables['cookies'] = CookieBoss::getInstance()->cookieDescriptions->getAll();
-
+        
+        $variables['allowAdminChanges'] = Craft::$app->getConfig()->getGeneral()->allowAdminChanges;
         $variables['settings'] = $settings;
         $variables['tabs'] = [
             'general' => [

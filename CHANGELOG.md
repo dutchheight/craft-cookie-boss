@@ -107,3 +107,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Edit
 - Dependencies
+
+## 1.4.3 - 2021-09-29
+### Added
+- Reflect 'allowAdminChanges' in UI

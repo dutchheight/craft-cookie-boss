@@ -21,23 +21,25 @@
 {% set title = 'Cookie Boss Settings'|t('cookie-boss') %}
 
 {% block actionButton %}
-    <div id="save-btn-container" class="btngroup submit">
-        {{ tag('input', {
-            type: 'submit',
-            class: ['btn', 'submit'],
-            value: 'Save'|t('app'),
-        }) }}
-        <div class="btn submit menubtn"></div>
-        <div class="menu" data-align="right">
-            <ul>
-                <li>
-                    <a class="formsubmit" data-name="submit-reset" data-param="reset-consent" data-value="true" data-action="cookie-boss/settings/save-general">
-                        {{ 'Save and invalidate consent'|t('cookie-boss') }}
-                    </a>
-                </li>
-            </ul>
+    {% if allowAdminChanges %}
+        <div id="save-btn-container" class="btngroup submit">
+            {{ tag('input', {
+                type: 'submit',
+                class: ['btn', 'submit'],
+                value: 'Save'|t('app'),
+            }) }}
+            <div class="btn submit menubtn"></div>
+            <div class="menu" data-align="right">
+                <ul>
+                    <li>
+                        <a class="formsubmit" data-name="submit-reset" data-param="reset-consent" data-value="true" data-action="cookie-boss/settings/save-general">
+                            {{ 'Save and invalidate consent'|t('cookie-boss') }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
