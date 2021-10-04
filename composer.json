@@ -2,7 +2,7 @@
     "name": "dutchheight/craft-cookie-boss",
     "description": "Allow your visitors to set their cookie preference.",
     "type": "craft-plugin",
-    "version": "1.4.3",
+    "version": "1.4.4",
     "keywords": [
         "craft",
         "cms",

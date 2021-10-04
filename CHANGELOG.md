@@ -111,3 +111,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.4.3 - 2021-09-29
 ### Added
 - Reflect 'allowAdminChanges' in UI
+
+## 1.4.4 - 2021-10-04
+### Edit
+- Removed fixed height

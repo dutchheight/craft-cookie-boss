@@ -20,7 +20,7 @@
         {% endif %}
 
         {% if settings.presentGroups %}
-            <div id="cookie-boss-modal" class="{{ templateSettings.position }}" :style=" !settingsOpen ? 'height: 150px;' : '' ">
+            <div id="cookie-boss-modal" class="{{ templateSettings.position }}">
                 <div id="container" v-if="!settingsOpen">
                     <h3 class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.title }}</h3>
                     <p class="item-wrapper item-wrapper-padding noselect" style="width: 100%;">{{ settings.message }}</p>
